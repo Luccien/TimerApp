@@ -112,7 +112,7 @@ fun ShowCard(currentTime:Long){
             mutableStateOf(false)
         }
 
-        var testi = 11
+
 
         LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
             if (currentTime > 0 && isTimerRunning) {
@@ -134,13 +134,8 @@ fun ShowCard(currentTime:Long){
 
 
 
-            /*
-        Text(
-            text = (currentTime / 1000L).toString(),
-            fontSize = 44.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White
-        )*/
+            TimerCountTextfield()
+
             ButtonStartPause(
                 currentTime=currentTime,
                 onCurrentTimeChange={currentTime = it},
@@ -149,7 +144,8 @@ fun ShowCard(currentTime:Long){
                 onCounterChange={counter = it},
                 isTimerRunning,
                 onIsTimerRunningChange ={isTimerRunning = it},
-                modifier=Modifier)
+            //    modifier=Modifier
+            )
 
 
             ///////////////
@@ -178,6 +174,22 @@ fun ShowCard(currentTime:Long){
 
 
 @Composable
+fun TimerCountTextfield(){
+    Box(contentAlignment = Alignment.BottomStart,
+        modifier = Modifier
+
+    ) {
+        Text(
+            text = "1000",//(currentTime / 1000L).toString(),
+            fontSize = 44.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White
+        )
+    }
+}
+
+
+@Composable
 fun ButtonStartPause(
                      currentTime:Long,
                      onCurrentTimeChange:(Long) -> Unit,
@@ -186,25 +198,25 @@ fun ButtonStartPause(
                      onCounterChange:(Int) -> Unit,
                      isTimerRunning:Boolean,
                      onIsTimerRunningChange:(Boolean) -> Unit,
+                     modifier:Modifier = Modifier
+                     //modifier: Modifier
+) {
 
-                     modifier: Modifier
-){
-
-
+    Box() {
     ///////////////
     Button(
         onClick = {
             if (currentTime <= 0L) {
                 onCurrentTimeChange(totalTime)
                 onCounterChange(10)
-                    onIsTimerRunningChange(true)
-                
+                onIsTimerRunningChange(true)
+
             } else {
-                    onIsTimerRunningChange(!isTimerRunning)
+                onIsTimerRunningChange(!isTimerRunning)
             }
         },
-       // modifier = Modifier.align(Alignment.BottomCenter),
-               modifier = modifier.align(Alignment.BottomCenter),
+        // modifier = Modifier.align(Alignment.BottomCenter),
+        modifier = modifier.align(Alignment.BottomCenter),
 
         colors = ButtonDefaults.buttonColors(
             backgroundColor = if (!isTimerRunning || currentTime <= 0L) {
@@ -222,7 +234,7 @@ fun ButtonStartPause(
         )
     }
     /////////////////////////////
-
+}
 
 }
 

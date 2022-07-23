@@ -252,10 +252,11 @@ fun ShowCard(currentTime:Long){
             fontWeight = FontWeight.Bold,
             color = Color.White
         )*/
+
+            ///////////////
             Button(
                 onClick = {
                     if (currentTime <= 0L) {
-                        //currentTime = 13L * 1000L
                         currentTime = totalTime
                         counter = 10
                         isTimerRunning = true
@@ -266,9 +267,7 @@ fun ShowCard(currentTime:Long){
                 modifier = Modifier.align(Alignment.BottomCenter),
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = if (!isTimerRunning || currentTime <= 0L) {
-                    //backgroundColor = if (!isTimerRunning ) {
-                    // -- works backgroundColor = if (currentTime <= 0L) {
-                        Color.Green
+                   Color.Green
                     } else {
                         Color.Red
                     }
@@ -276,15 +275,14 @@ fun ShowCard(currentTime:Long){
             ) {
                 Text(
                     text = if (isTimerRunning && currentTime > 0L) "Pause"
-                    //else if (!isTimerRunning && currentTime > 0L) "Start"
                     else if (!isTimerRunning && currentTime == totalTime) "Start"
                     else if (!isTimerRunning && currentTime > 0L) "Continue"
-
-                    // text = if (isTimerRunning && currentTime >= 0L) "Stop1"
-                   // else if (!isTimerRunning && currentTime >= 0L) "Start1"
                     else "Restart"
                 )
             }
+            /////////////////////////////
+
+
         }
     }
 

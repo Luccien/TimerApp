@@ -111,6 +111,9 @@ fun ShowCard(currentTime:Long){
         var isTimerRunning by remember {
             mutableStateOf(false)
         }
+
+        var testi = 11
+
         LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
             if (currentTime > 0 && isTimerRunning) {
                 delay(timeDelay)
@@ -128,12 +131,9 @@ fun ShowCard(currentTime:Long){
                 }
         ) {
 
-            Text(
-                text = (counter).toString(),
-                fontSize = 44.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
+
+
+
             /*
         Text(
             text = (currentTime / 1000L).toString(),
@@ -141,35 +141,16 @@ fun ShowCard(currentTime:Long){
             fontWeight = FontWeight.Bold,
             color = Color.White
         )*/
+            ButtonStartPause(
+                currentTime=currentTime,
+                onCurrentTimeChange={currentTime = it},
+                totalTime=totalTime,
+                counter=counter,
+                onCounterChange={counter = it},
+                isTimerRunning,
+                onIsTimerRunningChange ={isTimerRunning = it},
+                modifier=Modifier)
 
-            ///////////////
-            Button(
-                onClick = {
-                    if (currentTime <= 0L) {
-                        currentTime = totalTime
-                        counter = 10
-                        isTimerRunning = true
-                    } else {
-                        isTimerRunning = !isTimerRunning
-                    }
-                },
-                modifier = Modifier.align(Alignment.BottomCenter),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = if (!isTimerRunning || currentTime <= 0L) {
-                   Color.Green
-                    } else {
-                        Color.Red
-                    }
-                )
-            ) {
-                Text(
-                    text = if (isTimerRunning && currentTime > 0L) "Pause"
-                    else if (!isTimerRunning && currentTime == totalTime) "Start"
-                    else if (!isTimerRunning && currentTime > 0L) "Continue"
-                    else "Restart"
-                )
-            }
-            /////////////////////////////
 
             ///////////////
             Button(
@@ -191,8 +172,58 @@ fun ShowCard(currentTime:Long){
 
 
 
-        }
+        }// end box
     }
 
+
+
+@Composable
+fun ButtonStartPause(
+                     currentTime:Long,
+                     onCurrentTimeChange:(Long) -> Unit,
+                     totalTime: Long,
+                     counter:Int,
+                     onCounterChange:(Int) -> Unit,
+                     isTimerRunning:Boolean,
+                     onIsTimerRunningChange:(Boolean) -> Unit,
+
+                     modifier: Modifier
+){
+
+
+    ///////////////
+    Button(
+        onClick = {
+            if (currentTime <= 0L) {
+                onCurrentTimeChange(totalTime)
+                onCounterChange(10)
+                    onIsTimerRunningChange(true)
+                
+            } else {
+                    onIsTimerRunningChange(!isTimerRunning)
+            }
+        },
+       // modifier = Modifier.align(Alignment.BottomCenter),
+               modifier = modifier.align(Alignment.BottomCenter),
+
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = if (!isTimerRunning || currentTime <= 0L) {
+                Color.Green
+            } else {
+                Color.Red
+            }
+        )
+    ) {
+        Text(
+            text = if (isTimerRunning && currentTime > 0L) "Pause"
+            else if (!isTimerRunning && currentTime == totalTime) "Start"
+            else if (!isTimerRunning && currentTime > 0L) "Continue"
+            else "Restart"
+        )
+    }
+    /////////////////////////////
+
+
+}
 
 

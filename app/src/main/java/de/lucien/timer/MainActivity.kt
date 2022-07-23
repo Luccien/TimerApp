@@ -67,6 +67,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxHeight()
                         .padding(20.dp)
                 ) {
+                    //////////
                     Card(
                         elevation = 4.dp,
                     ) {
@@ -80,12 +81,16 @@ class MainActivity : ComponentActivity() {
                             Text("XYZ city", fontWeight = FontWeight.W300)
                         }
                     }
+
+                    ///////
                 }
             }
         }
     }
 }
 */
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,9 +120,38 @@ class MainActivity : ComponentActivity() {
 
 }
 
+@Composable
+fun ShowCard(currentTime:Long){
+    Card(
+        elevation = 4.dp,
+    ) {
+        if(currentTime > 12000L){
+        Image(
+            painter = painterResource(id = R.drawable.hund),
+            contentDescription = null
+        )}
+        else if(currentTime > 11000L){
+            Image(
+                painter = painterResource(id = R.drawable.hund),
+                contentDescription = null
+            )}
+        else{
+            Image(
+                painter = painterResource(id = R.drawable.hund),
+                contentDescription = null
+            )}
+        }
+
+        /*
+        Column(modifier = Modifier.padding(10.dp)) {
+            Text("AB CDE", fontWeight = FontWeight.W700)
+            Text("+0 12345678")
+            Text("XYZ city", fontWeight = FontWeight.W300)
+        }*/
+    }
+//}
 
 
-     */
     @Composable
     fun Timer(
         totalTime: Long,
@@ -169,6 +203,8 @@ class MainActivity : ComponentActivity() {
                     size = it
                 }
         ) {
+
+           /*
             Canvas(modifier = modifier) {
                 drawArc(
                     color = inactiveBarColor,
@@ -199,9 +235,10 @@ class MainActivity : ComponentActivity() {
                     cap = StrokeCap.Round
                 )
             }
-
-
-
+            */
+            //-------------
+            //------------------------->>>>>> PUT IN   ShowCard(currentTime)
+//-------------
             Text(
                 text = (counter).toString(),
                 fontSize = 44.sp,
@@ -218,7 +255,9 @@ class MainActivity : ComponentActivity() {
             Button(
                 onClick = {
                     if (currentTime <= 0L) {
+                        //currentTime = 13L * 1000L
                         currentTime = totalTime
+                        counter = 10
                         isTimerRunning = true
                     } else {
                         isTimerRunning = !isTimerRunning
@@ -226,9 +265,9 @@ class MainActivity : ComponentActivity() {
                 },
                 modifier = Modifier.align(Alignment.BottomCenter),
                 colors = ButtonDefaults.buttonColors(
-                    //backgroundColor = if (!isTimerRunning || currentTime <= 0L) {
+                    backgroundColor = if (!isTimerRunning || currentTime <= 0L) {
                     //backgroundColor = if (!isTimerRunning ) {
-                    backgroundColor = if (currentTime <= 0L) {
+                    // -- works backgroundColor = if (currentTime <= 0L) {
                         Color.Green
                     } else {
                         Color.Red
@@ -236,8 +275,13 @@ class MainActivity : ComponentActivity() {
                 )
             ) {
                 Text(
-                    text = if (isTimerRunning && currentTime >= 0L) "Stop1"
-                    else if (!isTimerRunning && currentTime >= 0L) "Start1"
+                    text = if (isTimerRunning && currentTime > 0L) "Pause"
+                    //else if (!isTimerRunning && currentTime > 0L) "Start"
+                    else if (!isTimerRunning && currentTime == totalTime) "Start"
+                    else if (!isTimerRunning && currentTime > 0L) "Continue"
+
+                    // text = if (isTimerRunning && currentTime >= 0L) "Stop1"
+                   // else if (!isTimerRunning && currentTime >= 0L) "Start1"
                     else "Restart"
                 )
             }

@@ -282,6 +282,54 @@ fun ShowCard(currentTime:Long){
             }
             /////////////////////////////
 
+            ///////////////
+            Button(
+                onClick = {
+                    currentTime = totalTime
+                    counter = 10
+                    isTimerRunning = false
+                },
+                modifier = Modifier.align(Alignment.BottomEnd),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor =   Color.Green
+
+                )
+            ) {
+                Text(
+                    text = "Reset"
+                )
+            }
+            /////////////////////////////
+            ///////////////
+           /*
+            Button(
+                onClick = {
+                    if (currentTime <= 0L) {
+                        currentTime = totalTime
+                        counter = 10
+                        isTimerRunning = true
+                    } else {
+                        isTimerRunning = !isTimerRunning
+                    }
+                },
+                modifier = Modifier.align(Alignment.BottomCenter),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = if (!isTimerRunning || currentTime <= 0L) {
+                        Color.Green
+                    } else {
+                        Color.Red
+                    }
+                )
+            ) {
+                Text(
+                    text = if (isTimerRunning && currentTime > 0L) "Pause"
+                    else if (!isTimerRunning && currentTime == totalTime) "Start"
+                    else if (!isTimerRunning && currentTime > 0L) "Continue"
+                    else "Restart"
+                )
+            }*/
+            /////////////////////////////
+
 
         }
     }

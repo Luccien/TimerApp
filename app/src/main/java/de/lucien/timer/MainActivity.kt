@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     Timer(
                         //totalTime = 100L * 1000L,
                         //totalTime = 10L * 1000L,
-                        totalTime = 13L * 1000L,
+                       // totalTime = 13L * 1000L,
 
                         handleColor = Color.Green,
                         inactiveBarColor = Color.DarkGray,
@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun Timer(
-        totalTime: Long,
+        //totalTime: Long,
         handleColor: Color,
         inactiveBarColor: Color,
         activeBarColor: Color,
@@ -68,6 +68,11 @@ class MainActivity : ComponentActivity() {
         initialValue: Float = 1f,
         strokeWidth: Dp = 5.dp
     ) {
+
+        var totalTime by remember {
+            mutableStateOf(13L * 1000L) // 10 is number of pictures
+        }
+        //totalTime = 13L * 1000L,
 
         var counter by remember {
             mutableStateOf(10) // 10 is number of pictures
@@ -100,12 +105,7 @@ class MainActivity : ComponentActivity() {
                 value = currentTime / totalTime.toFloat()
             }
         }
-       /* Box(
-            contentAlignment = Alignment.Center,
-            modifier = modifier
-                .onSizeChanged {
-                    size = it
-                }*/
+
         Column(
             modifier = Modifier
                 .fillMaxSize(),
@@ -115,7 +115,15 @@ class MainActivity : ComponentActivity() {
 
 
 
-            SetTimeForTimer()
+            SetTimeForTimer(currentTime=currentTime,
+                onCurrentTimeChange={currentTime = it},
+                totalTime=totalTime,
+                onTotalTimeChange={totalTime = it},
+                counter=counter,
+                onCounterChange={counter = it},
+                isTimerRunning,
+                onIsTimerRunningChange ={isTimerRunning = it},
+            )
 
 
             TimerCountTextfield(currentTime=currentTime)
@@ -128,8 +136,9 @@ class MainActivity : ComponentActivity() {
                 onCounterChange={counter = it},
                 isTimerRunning,
                 onIsTimerRunningChange ={isTimerRunning = it},
-            //    modifier=Modifier
+
             )
+
 
 
             ///////////////
@@ -150,8 +159,6 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-
-
         }// end box
     }
 
@@ -170,62 +177,92 @@ fun TimerCountTextfield(currentTime:Long,){
 
 
 
-// wie zeit zerlegen??
-@Composable
-fun SetTimeForTimer(){
 
-    Row() {
-        ////////////////////////////
-        Column(
-            // modifier = Modifier
-            //   .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            //verticalArrangement = Arrangement.SpaceEvenly
-        ) {
+/*
+ //totalTime = 100L * 1000L,
+                        //totalTime = 10L * 1000L,
+                        totalTime = 13L * 1000L,
+ */
+
+@Composable
+fun SetTimeForTimer(currentTime:Long,
+                    onCurrentTimeChange:(Long) -> Unit,
+                    totalTime: Long,
+                    onTotalTimeChange:(Long) -> Unit,
+                    counter:Int,
+                    onCounterChange:(Int) -> Unit,
+                    isTimerRunning:Boolean,
+                    onIsTimerRunningChange:(Boolean) -> Unit,
+){
+    Column() {
+        Row() {
             Button(
-                onClick = {}) {
+                onClick = {
+                    // add one minute
+                    onTotalTimeChange(totalTime + (1000L*60) )
+                }) {
                 Image(
                     painterResource(id = R.drawable.ic_baseline_arrow_upward_24),
-                    contentDescription = "nnnnn",
+                    contentDescription = "",
                     modifier = Modifier.size(20.dp)
                 )
             }
+            Button(
+                onClick = {
+                    // subtract one minute
+                    onTotalTimeChange(totalTime - (1000L*60) )
+                }) {
+                Image(
+                    painterResource(id = R.drawable.ic_baseline_arrow_upward_24),
+                    contentDescription = "",
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+        }
+        Row() {
             Text(
                 text = "df",//(currentTime / 1000L).toString(),
                 fontSize = 44.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
-
-            Button(
-                onClick = {}) {
-                Image(
-                    painterResource(id = R.drawable.ic_baseline_arrow_downward_24),
-                    contentDescription = "nnnnn",
-                    modifier = Modifier.size(20.dp)
-                )
-            }
-        }
-            //////////////////////
-        Column(
-            // modifier = Modifier
-            //   .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            //verticalArrangement = Arrangement.SpaceEvenly
-        ) {
             Text(
                 text = ":",//(currentTime / 1000L).toString(),
                 fontSize = 44.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
+
         }
-
-        ////////////
-
+        Row() {
+            Button(
+                onClick = {
+                    // add one second
+                    onTotalTimeChange(totalTime + (1000L) )
+                }) {
+                Image(
+                    painterResource(id = R.drawable.ic_baseline_arrow_downward_24),
+                    contentDescription = "",
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+            Button(
+                onClick = {
+                    // subtract one second
+                    onTotalTimeChange(totalTime + (1000L) )
+                }) {
+                Image(
+                    painterResource(id = R.drawable.ic_baseline_arrow_downward_24),
+                    contentDescription = "",
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+        }
 
     }
 }
+
+
 
 
 
@@ -238,8 +275,7 @@ fun ButtonStartPause(
                      onCounterChange:(Int) -> Unit,
                      isTimerRunning:Boolean,
                      onIsTimerRunningChange:(Boolean) -> Unit,
-                     //modifier:Modifier = Modifier
-                     //modifier: Modifier
+
 ) {
 
     //Box() {

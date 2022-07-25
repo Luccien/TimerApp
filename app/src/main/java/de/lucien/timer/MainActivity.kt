@@ -115,6 +115,8 @@ class MainActivity : ComponentActivity() {
 
 
 
+            SetTimeForTimer()
+
 
             TimerCountTextfield(currentTime=currentTime)
 
@@ -165,6 +167,66 @@ fun TimerCountTextfield(currentTime:Long,){
         )
 
 }
+
+
+
+// wie zeit zerlegen??
+@Composable
+fun SetTimeForTimer(){
+
+    Row() {
+        ////////////////////////////
+        Column(
+            // modifier = Modifier
+            //   .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            //verticalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Button(
+                onClick = {}) {
+                Image(
+                    painterResource(id = R.drawable.ic_baseline_arrow_upward_24),
+                    contentDescription = "nnnnn",
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+            Text(
+                text = "df",//(currentTime / 1000L).toString(),
+                fontSize = 44.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+
+            Button(
+                onClick = {}) {
+                Image(
+                    painterResource(id = R.drawable.ic_baseline_arrow_downward_24),
+                    contentDescription = "nnnnn",
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+        }
+            //////////////////////
+        Column(
+            // modifier = Modifier
+            //   .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            //verticalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Text(
+                text = ":",//(currentTime / 1000L).toString(),
+                fontSize = 44.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+        }
+
+        ////////////
+
+
+    }
+}
+
 
 
 @Composable

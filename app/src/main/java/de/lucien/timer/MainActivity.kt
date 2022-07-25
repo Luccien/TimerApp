@@ -115,16 +115,18 @@ class MainActivity : ComponentActivity() {
 
 
 
-            SetTimeForTimer(currentTime=currentTime,
-                onCurrentTimeChange={currentTime = it},
-                totalTime=totalTime,
-                onTotalTimeChange={totalTime = it},
-                counter=counter,
-                onCounterChange={counter = it},
-                isTimerRunning,
-                onIsTimerRunningChange ={isTimerRunning = it},
-            )
-
+           if(!isTimerRunning && currentTime == totalTime) {
+               SetTimeForTimer(
+                   currentTime = currentTime,
+                   onCurrentTimeChange = { currentTime = it },
+                   totalTime = totalTime,
+                   onTotalTimeChange = { totalTime = it },
+                   counter = counter,
+                   onCounterChange = { counter = it },
+                   isTimerRunning,
+                   onIsTimerRunningChange = { isTimerRunning = it },
+               )
+           }
 
             TimerCountTextfield(currentTime=currentTime)
 
@@ -142,22 +144,28 @@ class MainActivity : ComponentActivity() {
 
 
             ///////////////
-            Button(
-                onClick = {
-                    currentTime = totalTime
-                    counter = 10
-                    isTimerRunning = false
-                },
-                //modifier = Modifier.align(Alignment.BottomEnd),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor =   Color.Green
+            if(isTimerRunning && currentTime != totalTime){
+                Button(
+                    onClick = {
+                        currentTime = totalTime
+                        counter = 10
+                        isTimerRunning = false
+                    },
+                    //modifier = Modifier.align(Alignment.BottomEnd),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = Color.Green
 
-                )
-            ) {
-                Text(
-                    text = "Reset"
-                )
+                    )
+                ) {
+                    Text(
+                        text = "Reset"
+                    )
+                }
+
             }
+            // end reset button
+
+
 
         }// end box
     }
@@ -293,8 +301,6 @@ fun ButtonStartPause(
 
 ) {
 
-    //Box() {
-    ///////////////
     Button(
         onClick = {
             if (currentTime <= 0L) {
@@ -306,8 +312,7 @@ fun ButtonStartPause(
                 onIsTimerRunningChange(!isTimerRunning)
             }
         },
-        // modifier = Modifier.align(Alignment.BottomCenter),
-        //modifier = modifier.align(Alignment.BottomCenter),
+
 
         colors = ButtonDefaults.buttonColors(
             backgroundColor = if (!isTimerRunning || currentTime <= 0L) {
@@ -323,11 +328,11 @@ fun ButtonStartPause(
             else if (!isTimerRunning && currentTime > 0L) "Continue"
             else "Restart"
         )
-    //}
-    /////////////////////////////
+
+    }
 }
 
-}
+
 
 @Composable
 fun ShowCard(currentTime:Long){

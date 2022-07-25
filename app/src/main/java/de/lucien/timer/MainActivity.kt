@@ -34,13 +34,8 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier.fillMaxSize()
             ) {
                 Box(
-                    //contentAlignment = Alignment.Center
                 ) {
                     Timer(
-                        //totalTime = 100L * 1000L,
-                        //totalTime = 10L * 1000L,
-                       // totalTime = 13L * 1000L,
-
                         handleColor = Color.Green,
                         inactiveBarColor = Color.DarkGray,
                         activeBarColor = Color(0xFF37B900),
@@ -72,7 +67,6 @@ class MainActivity : ComponentActivity() {
         var totalTime by remember {
             mutableStateOf(13L * 1000L) // 10 is number of pictures
         }
-        //totalTime = 13L * 1000L,
 
         var counter by remember {
             mutableStateOf(10) // 10 is number of pictures
@@ -115,7 +109,7 @@ class MainActivity : ComponentActivity() {
 
 
 
-           if(!isTimerRunning && currentTime == totalTime) {
+           if(    (!isTimerRunning && currentTime == totalTime) ||   (isTimerRunning && currentTime <= 0L)   ) {
                SetTimeForTimer(
                    currentTime = currentTime,
                    onCurrentTimeChange = { currentTime = it },
@@ -143,15 +137,15 @@ class MainActivity : ComponentActivity() {
 
 
 
-            ///////////////
-            if(isTimerRunning && currentTime != totalTime){
+            /////////////// TODO
+            if(   (isTimerRunning && currentTime != totalTime) ){  // TODO
+                //|| (!isTimerRunning && currentTime == totalTime)    ){
                 Button(
                     onClick = {
                         currentTime = totalTime
                         counter = 10
                         isTimerRunning = false
                     },
-                    //modifier = Modifier.align(Alignment.BottomEnd),
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = Color.Green
 
@@ -171,15 +165,19 @@ class MainActivity : ComponentActivity() {
     }
 
 
+@Composable
+fun resetButton(){
+    // TODO
+}
+
+
+
 
 @Composable
-fun TimerCountTextfield(currentTime:Long,){
-        Text(
-            text = (currentTime / 1000L).toString(),
-            fontSize = 44.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White
-        )
+fun TimerCountTextfield(currentTime:Long){
+    Row() {
+        showTimeInMinAndSec(currentTime)
+    }
 
 }
 

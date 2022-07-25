@@ -216,35 +216,17 @@ fun SetTimeForTimer(currentTime:Long,
             }
         }
         Row() {
-            val allSec = totalTime/1000L
-            val min:Int = (allSec/60).toInt()
-            val secLeft:Long = allSec - (min*60)
-
-            Text(
-                text = min.toString(),
-                fontSize = 44.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
-            Text(
-                text = ":",
-                fontSize = 44.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
-            Text(
-                text = secLeft.toString(),
-                fontSize = 44.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
+           showTimeInMinAndSec(totalTime)
 
         }
         Row() {
             Button(
                 onClick = {
                     // add one second
-                    onTotalTimeChange(totalTime - (60* 1000L) )
+                    val newTime = totalTime - (60 * 1000L)
+                    if(newTime>0) {
+                        onTotalTimeChange(newTime)
+                    }
                 }) {
                 Image(
                     painterResource(id = R.drawable.ic_baseline_arrow_downward_24),
@@ -255,7 +237,10 @@ fun SetTimeForTimer(currentTime:Long,
             Button(
                 onClick = {
                     // subtract one second
-                    onTotalTimeChange(totalTime - (1000L) )
+                    val newTime = totalTime - (1000L)
+                    if(newTime>0) {
+                        onTotalTimeChange(newTime)
+                    }
                 }) {
                 Image(
                     painterResource(id = R.drawable.ic_baseline_arrow_downward_24),
@@ -268,7 +253,31 @@ fun SetTimeForTimer(currentTime:Long,
     }
 }
 
+@Composable
+fun showTimeInMinAndSec(timeInMilliS:Long){
+    val allSec = timeInMilliS/1000L
+    val min:Int = (allSec/60).toInt()
+    val secLeft:Long = allSec - (min*60)
 
+    Text(
+        text = min.toString(),
+        fontSize = 44.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.White
+    )
+    Text(
+        text = ":",
+        fontSize = 44.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.White
+    )
+    Text(
+        text = secLeft.toString(),
+        fontSize = 44.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.White
+    )
+}
 
 
 

@@ -178,11 +178,7 @@ fun TimerCountTextfield(currentTime:Long,){
 
 
 
-/*
- //totalTime = 100L * 1000L,
-                        //totalTime = 10L * 1000L,
-                        totalTime = 13L * 1000L,
- */
+
 
 @Composable
 fun SetTimeForTimer(currentTime:Long,
@@ -210,7 +206,7 @@ fun SetTimeForTimer(currentTime:Long,
             Button(
                 onClick = {
                     // subtract one minute
-                    onTotalTimeChange(totalTime - (1000L*60) )
+                    onTotalTimeChange(totalTime + (1000L) )
                 }) {
                 Image(
                     painterResource(id = R.drawable.ic_baseline_arrow_upward_24),
@@ -220,14 +216,24 @@ fun SetTimeForTimer(currentTime:Long,
             }
         }
         Row() {
+            val allSec = totalTime/1000L
+            val min:Int = (allSec/60).toInt()
+            val secLeft:Long = allSec - (min*60)
+
             Text(
-                text = "df",//(currentTime / 1000L).toString(),
+                text = min.toString(),
                 fontSize = 44.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
             Text(
-                text = ":",//(currentTime / 1000L).toString(),
+                text = ":",
+                fontSize = 44.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+            Text(
+                text = secLeft.toString(),
                 fontSize = 44.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
@@ -238,7 +244,7 @@ fun SetTimeForTimer(currentTime:Long,
             Button(
                 onClick = {
                     // add one second
-                    onTotalTimeChange(totalTime + (1000L) )
+                    onTotalTimeChange(totalTime - (60* 1000L) )
                 }) {
                 Image(
                     painterResource(id = R.drawable.ic_baseline_arrow_downward_24),
@@ -249,7 +255,7 @@ fun SetTimeForTimer(currentTime:Long,
             Button(
                 onClick = {
                     // subtract one second
-                    onTotalTimeChange(totalTime + (1000L) )
+                    onTotalTimeChange(totalTime - (1000L) )
                 }) {
                 Image(
                     painterResource(id = R.drawable.ic_baseline_arrow_downward_24),

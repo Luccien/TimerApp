@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier.fillMaxSize()
             ) {
                 Box(
-                    contentAlignment = Alignment.Center
+                    //contentAlignment = Alignment.Center
                 ) {
                     Timer(
                         //totalTime = 100L * 1000L,
@@ -54,30 +54,7 @@ class MainActivity : ComponentActivity() {
 
 }
 
-@Composable
-fun ShowCard(currentTime:Long){
-    Card(
-        elevation = 4.dp,
-    ) {
-        if(currentTime > 12000L){
-        Image(
-            painter = painterResource(id = R.drawable.hund),
-            contentDescription = null
-        )}
-        else if(currentTime > 11000L){
-            Image(
-                painter = painterResource(id = R.drawable.hund),
-                contentDescription = null
-            )}
-        else{
-            Image(
-                painter = painterResource(id = R.drawable.hund),
-                contentDescription = null
-            )}
-        }
 
-
-    }
 
 
 
@@ -123,18 +100,23 @@ fun ShowCard(currentTime:Long){
                 value = currentTime / totalTime.toFloat()
             }
         }
-        Box(
+       /* Box(
             contentAlignment = Alignment.Center,
             modifier = modifier
                 .onSizeChanged {
                     size = it
-                }
+                }*/
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly
         ) {
 
 
 
 
-            TimerCountTextfield()
+            TimerCountTextfield(currentTime=currentTime)
 
             ButtonStartPause(
                 currentTime=currentTime,
@@ -155,7 +137,7 @@ fun ShowCard(currentTime:Long){
                     counter = 10
                     isTimerRunning = false
                 },
-                modifier = Modifier.align(Alignment.BottomEnd),
+                //modifier = Modifier.align(Alignment.BottomEnd),
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor =   Color.Green
 
@@ -174,18 +156,14 @@ fun ShowCard(currentTime:Long){
 
 
 @Composable
-fun TimerCountTextfield(){
-    Box(contentAlignment = Alignment.BottomStart,
-        modifier = Modifier
-
-    ) {
+fun TimerCountTextfield(currentTime:Long,){
         Text(
-            text = "1000",//(currentTime / 1000L).toString(),
+            text = (currentTime / 1000L).toString(),
             fontSize = 44.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White
         )
-    }
+
 }
 
 
@@ -198,11 +176,11 @@ fun ButtonStartPause(
                      onCounterChange:(Int) -> Unit,
                      isTimerRunning:Boolean,
                      onIsTimerRunningChange:(Boolean) -> Unit,
-                     modifier:Modifier = Modifier
+                     //modifier:Modifier = Modifier
                      //modifier: Modifier
 ) {
 
-    Box() {
+    //Box() {
     ///////////////
     Button(
         onClick = {
@@ -216,7 +194,7 @@ fun ButtonStartPause(
             }
         },
         // modifier = Modifier.align(Alignment.BottomCenter),
-        modifier = modifier.align(Alignment.BottomCenter),
+        //modifier = modifier.align(Alignment.BottomCenter),
 
         colors = ButtonDefaults.buttonColors(
             backgroundColor = if (!isTimerRunning || currentTime <= 0L) {
@@ -232,10 +210,33 @@ fun ButtonStartPause(
             else if (!isTimerRunning && currentTime > 0L) "Continue"
             else "Restart"
         )
-    }
+    //}
     /////////////////////////////
 }
 
 }
 
+@Composable
+fun ShowCard(currentTime:Long){
+    Card(
+        elevation = 4.dp,
+    ) {
+        if(currentTime > 12000L){
+            Image(
+                painter = painterResource(id = R.drawable.hund),
+                contentDescription = null
+            )}
+        else if(currentTime > 11000L){
+            Image(
+                painter = painterResource(id = R.drawable.hund),
+                contentDescription = null
+            )}
+        else{
+            Image(
+                painter = painterResource(id = R.drawable.hund),
+                contentDescription = null
+            )}
+    }
 
+
+}

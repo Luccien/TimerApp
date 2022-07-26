@@ -66,16 +66,16 @@ class MainActivity : ComponentActivity() {
         strokeWidth: Dp = 5.dp
     ) {
 
+        val pictureAmount = 12
+
         var totalTime by remember {
-            mutableStateOf(13L * 1000L) // 10 is number of pictures
+            mutableStateOf(24L * 1000L)
         }
 
         var counter by remember {
-            mutableStateOf(10) // 10 is number of pictures
+            mutableStateOf(1)
         }
-        var timeDelay by remember {
-            mutableStateOf(totalTime / 10)// 10 is number of pictures
-        }
+
 
         var size by remember {
             mutableStateOf(IntSize.Zero)
@@ -89,15 +89,24 @@ class MainActivity : ComponentActivity() {
         var isTimerRunning by remember {
             mutableStateOf(false)
         }
+        var timeToShowNextPicture by remember {
+            var timePerPicture = totalTime/pictureAmount
+            mutableStateOf(counter * timePerPicture)
+        }
+
+
 
 
 
         LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
             if (currentTime > 0 && isTimerRunning) {
+                delay(1000L)
+                currentTime -= 1000L
+                /*
                 delay(timeDelay)
                 currentTime -= timeDelay
                 counter--
-
+                */
                 value = currentTime / totalTime.toFloat()
             }
         }
@@ -125,10 +134,43 @@ class MainActivity : ComponentActivity() {
 
 
             //--------
-            if (isTimerRunning && currentTime > 0L) { TimerCountTextfield(currentTime = currentTime)}
+            if (isTimerRunning && currentTime > 0L) {
+                TimerCountTextfield(currentTime = currentTime)
+                //------
+                ShowHangman(
+                    pictureAmount = pictureAmount,
+                    currentTime = currentTime,
+                    totalTime = totalTime,
+                    counter = counter,
+                    onCounterChange = { counter = it },
+                    timeToShowNextPicture = timeToShowNextPicture,
+                    onTimeToShowNextPictureChange = { timeToShowNextPicture = it })
+                //------
+
+            }
            else if (!isTimerRunning && currentTime == totalTime) {}
-           else if (!isTimerRunning && currentTime > 0L){ TimerCountTextfield(currentTime = currentTime)}
+           else if (!isTimerRunning && currentTime > 0L){
+               TimerCountTextfield(currentTime = currentTime)
+                //------
+                ShowHangman(
+                    pictureAmount = pictureAmount,
+                    currentTime = currentTime,
+                    totalTime = totalTime,
+                    counter = counter,
+                    onCounterChange = { counter = it },
+                    timeToShowNextPicture = timeToShowNextPicture,
+                    onTimeToShowNextPictureChange = { timeToShowNextPicture = it })
+                //------
+
+
+           }
             //------
+
+
+
+
+
+
 
 
 
@@ -146,13 +188,6 @@ class MainActivity : ComponentActivity() {
                     onIsTimerRunningChange = { isTimerRunning = it }
 
                 )
-                /////////////// TODO
-               // if(!isTimerRunning && currentTime == 0){
-
-                //}
-                //else {
-                  //  if ((isTimerRunning && currentTime != totalTime)) {  // TODO
-
 
                         ResetButton(currentTime = currentTime,
                             onCurrentTimeChange = { currentTime = it },
@@ -162,13 +197,135 @@ class MainActivity : ComponentActivity() {
                             isTimerRunning,
                             onIsTimerRunningChange = { isTimerRunning = it })
 
-
-                    //}
-                    ///////////////////
-                //}
             }//--row
         }
     }
+
+
+
+@Composable
+fun ShowHangman(pictureAmount:Int,
+                currentTime: Long,
+                totalTime: Long,
+                counter: Int,
+                onCounterChange: (Int) -> Unit,
+                timeToShowNextPicture:Long,
+                onTimeToShowNextPictureChange: (Long) -> Unit)
+{
+   // ShowCard111(counter)
+    //ShowCard(counter)
+
+    //24L * 1000L
+
+    if(currentTime <= timeToShowNextPicture ){
+        if( (counter+1) <=  pictureAmount) {
+            onCounterChange(counter + 1)
+            /////////////////
+            val timePerPicture = totalTime/pictureAmount
+            //val timeToShowNextPicture = counter * timePerPicture
+            onTimeToShowNextPictureChange(counter * timePerPicture)
+            ShowCard(counter)
+            /////////////////
+        }
+    }
+}
+
+
+@Composable
+fun ShowCard111(counter:Int) {
+    Card(
+        elevation = 4.dp,
+    ) {
+        if (counter == 1) {
+            Image(
+                painter = painterResource(id = R.drawable.p1),
+                contentDescription = null
+            )
+        }
+    }
+}
+
+
+@Composable
+fun ShowCard(counter:Int){
+    Card(
+        elevation = 4.dp,
+    ) {
+        if(counter == 1){
+            Image(
+                painter = painterResource(id = R.drawable.p1),
+                contentDescription = null
+            )}
+        else if(counter == 2){
+            Image(
+                painter = painterResource(id = R.drawable.p2),
+                contentDescription = null
+            )}
+        else if(counter == 3){
+            Image(
+                painter = painterResource(id = R.drawable.p3),
+                contentDescription = null
+            )}
+        else if(counter == 4){
+            Image(
+                painter = painterResource(id = R.drawable.p4),
+                contentDescription = null
+            )}
+        else if(counter == 5){
+            Image(
+                painter = painterResource(id = R.drawable.p5),
+                contentDescription = null
+            )}
+        else if(counter == 6){
+            Image(
+                painter = painterResource(id = R.drawable.p6),
+                contentDescription = null
+            )}
+        else if(counter == 7){
+            Image(
+                painter = painterResource(id = R.drawable.p7),
+                contentDescription = null
+            )}
+        else if(counter == 8){
+            Image(
+                painter = painterResource(id = R.drawable.p8),
+                contentDescription = null
+            )}
+        else if(counter == 9){
+            Image(
+                painter = painterResource(id = R.drawable.p9),
+                contentDescription = null
+            )}
+        else if(counter == 10){
+            Image(
+                painter = painterResource(id = R.drawable.p10),
+                contentDescription = null
+            )}
+        else if(counter == 11){
+            Image(
+                painter = painterResource(id = R.drawable.p11),
+                contentDescription = null
+            )}
+        else if(counter == 12){
+            Image(
+                painter = painterResource(id = R.drawable.p12),
+                contentDescription = null
+            )}
+
+
+
+
+
+    }
+
+
+}
+
+
+
+
+
+
 
 @Composable
 fun ResetButton(currentTime:Long,
@@ -182,7 +339,7 @@ fun ResetButton(currentTime:Long,
     Button(
         onClick = {
             onCurrentTimeChange(totalTime)
-            onCounterChange(10)
+            onCounterChange(1)
             onIsTimerRunningChange(false)
         },
         colors = ButtonDefaults.buttonColors(
@@ -196,27 +353,9 @@ fun ResetButton(currentTime:Long,
     }
 
 }
-
-
-
-
-
 // end reset button
 
-/*
-@Composable
-fun ResetButton(
-    currentTime: Long,
-    onCurrentTimeChange: () -> Unit,
-    totalTime: Long,
-    counter: Int,
-    onCounterChange: () -> Unit,
-    timerRunning: Boolean,
-    onIsTimerRunningChange: () -> Unit
-) {
-    TODO("Not yet implemented")
-}
-*/
+
 
 @Composable
 fun TimerCountTextfield(currentTime:Long){
@@ -354,7 +493,7 @@ fun ButtonStartPause(
         onClick = {
             if (currentTime <= 0L) {
                 onCurrentTimeChange(totalTime)
-                onCounterChange(10)
+                onCounterChange(1)
                 onIsTimerRunningChange(true)
 
             } else {
@@ -392,28 +531,3 @@ fun ButtonStartPause(
 }
 
 
-
-@Composable
-fun ShowCard(currentTime:Long){
-    Card(
-        elevation = 4.dp,
-    ) {
-        if(currentTime > 12000L){
-            Image(
-                painter = painterResource(id = R.drawable.hund),
-                contentDescription = null
-            )}
-        else if(currentTime > 11000L){
-            Image(
-                painter = painterResource(id = R.drawable.hund),
-                contentDescription = null
-            )}
-        else{
-            Image(
-                painter = painterResource(id = R.drawable.hund),
-                contentDescription = null
-            )}
-    }
-
-
-}

@@ -140,20 +140,25 @@ class MainActivity : ComponentActivity() {
 
                 )
                 /////////////// TODO
-                if ((isTimerRunning && currentTime != totalTime)) {  // TODO
-                    //|| (!isTimerRunning && currentTime == totalTime)    ){
+               // if(!isTimerRunning && currentTime == 0){
 
-                    ResetButton(currentTime = currentTime,
-                        onCurrentTimeChange = { currentTime = it },
-                        totalTime = totalTime,
-                        counter = counter,
-                        onCounterChange = { counter = it },
-                        isTimerRunning,
-                        onIsTimerRunningChange = { isTimerRunning = it })
+                //}
+                //else {
+                  //  if ((isTimerRunning && currentTime != totalTime)) {  // TODO
 
 
-                }
-                ///////////////////
+                        ResetButton(currentTime = currentTime,
+                            onCurrentTimeChange = { currentTime = it },
+                            totalTime = totalTime,
+                            counter = counter,
+                            onCounterChange = { counter = it },
+                            isTimerRunning,
+                            onIsTimerRunningChange = { isTimerRunning = it })
+
+
+                    //}
+                    ///////////////////
+                //}
             }//--row
         }
     }
@@ -366,7 +371,8 @@ fun ButtonStartPause(
         else if (!isTimerRunning && currentTime == totalTime) "Start"
         else if (!isTimerRunning && currentTime > 0L)
         else {
-            Log.DEBUG("istimerrunning " + !isTimerRunning + "  creenttime  " + currentTime)
+            //Log.DEBUG("istimerrunning " + !isTimerRunning + "  creenttime  " + currentTime)
+            Log.d("tag", "istimerrunning " + !isTimerRunning + "  creenttime  " + currentTime)
         }
         //-----------
     }

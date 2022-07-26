@@ -26,8 +26,6 @@ import androidx.compose.ui.res.painterResource
 class MainActivity : ComponentActivity() {
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -47,8 +45,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
-
 }
 
 
@@ -93,9 +89,6 @@ class MainActivity : ComponentActivity() {
             var timePerPicture = totalTime/pictureAmount
             mutableStateOf(counter * timePerPicture)
         }
-
-
-
 
 
         LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
@@ -166,16 +159,6 @@ class MainActivity : ComponentActivity() {
            }
             //------
 
-
-
-
-
-
-
-
-
-
-
             Row() { // --row
                 /////////////////
                 ButtonStartPause(
@@ -186,9 +169,7 @@ class MainActivity : ComponentActivity() {
                     onCounterChange = { counter = it },
                     isTimerRunning,
                     onIsTimerRunningChange = { isTimerRunning = it }
-
                 )
-
                         ResetButton(currentTime = currentTime,
                             onCurrentTimeChange = { currentTime = it },
                             totalTime = totalTime,
@@ -219,31 +200,18 @@ fun ShowHangman(pictureAmount:Int,
 
     if(currentTime <= timeToShowNextPicture ){
         if( (counter+1) <=  pictureAmount) {
-            onCounterChange(counter + 1)
+
             /////////////////
             val timePerPicture = totalTime/pictureAmount
             //val timeToShowNextPicture = counter * timePerPicture
-            onTimeToShowNextPictureChange(counter * timePerPicture)
-            ShowCard(counter)
+            onTimeToShowNextPictureChange( (counter+1) * timePerPicture)
+            ShowCard(counter+1)
+            onCounterChange(counter + 1)
             /////////////////
         }
     }
 }
 
-
-@Composable
-fun ShowCard111(counter:Int) {
-    Card(
-        elevation = 4.dp,
-    ) {
-        if (counter == 1) {
-            Image(
-                painter = painterResource(id = R.drawable.p1),
-                contentDescription = null
-            )
-        }
-    }
-}
 
 
 @Composable
@@ -311,14 +279,7 @@ fun ShowCard(counter:Int){
                 painter = painterResource(id = R.drawable.p12),
                 contentDescription = null
             )}
-
-
-
-
-
     }
-
-
 }
 
 
@@ -328,7 +289,8 @@ fun ShowCard(counter:Int){
 
 
 @Composable
-fun ResetButton(currentTime:Long,
+fun ResetButton(
+                currentTime:Long,
                 onCurrentTimeChange:(Long) -> Unit,
                 totalTime: Long,
                 counter:Int,

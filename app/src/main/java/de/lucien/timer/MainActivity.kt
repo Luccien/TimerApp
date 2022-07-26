@@ -1,6 +1,8 @@
 package de.lucien.timer
 
 import android.os.Bundle
+import android.util.Log
+import android.util.Log.DEBUG
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -93,7 +95,7 @@ class MainActivity : ComponentActivity() {
         LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
             if (currentTime > 0 && isTimerRunning) {
                 delay(timeDelay)
-               currentTime -= timeDelay
+                currentTime -= timeDelay
                 counter--
 
                 value = currentTime / totalTime.toFloat()
@@ -108,70 +110,101 @@ class MainActivity : ComponentActivity() {
         ) {
 
 
-
-           if(    (!isTimerRunning && currentTime == totalTime) ||   (isTimerRunning && currentTime <= 0L)   ) {
-               SetTimeForTimer(
-                   currentTime = currentTime,
-                   onCurrentTimeChange = { currentTime = it },
-                   totalTime = totalTime,
-                   onTotalTimeChange = { totalTime = it },
-                   counter = counter,
-                   onCounterChange = { counter = it },
-                   isTimerRunning,
-                   onIsTimerRunningChange = { isTimerRunning = it },
-               )
-           }
-
-            TimerCountTextfield(currentTime=currentTime)
-
-            ButtonStartPause(
-                currentTime=currentTime,
-                onCurrentTimeChange={currentTime = it},
-                totalTime=totalTime,
-                counter=counter,
-                onCounterChange={counter = it},
-                isTimerRunning,
-                onIsTimerRunningChange ={isTimerRunning = it},
-
-            )
-
-
-
-            /////////////// TODO
-            if(   (isTimerRunning && currentTime != totalTime) ){  // TODO
-                //|| (!isTimerRunning && currentTime == totalTime)    ){
-                Button(
-                    onClick = {
-                        currentTime = totalTime
-                        counter = 10
-                        isTimerRunning = false
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = Color.Green
-
-                    )
-                ) {
-                    Text(
-                        text = "Reset"
-                    )
-                }
-
+            if ((!isTimerRunning && currentTime == totalTime) || (isTimerRunning && currentTime <= 0L)) {
+                SetTimeForTimer(
+                    currentTime = currentTime,
+                    onCurrentTimeChange = { currentTime = it },
+                    totalTime = totalTime,
+                    onTotalTimeChange = { totalTime = it },
+                    counter = counter,
+                    onCounterChange = { counter = it },
+                    isTimerRunning,
+                    onIsTimerRunningChange = { isTimerRunning = it },
+                )
             }
-            // end reset button
+
+            TimerCountTextfield(currentTime = currentTime)
 
 
 
-        }// end box
+            Row() { // --row
+                /////////////////
+                ButtonStartPause(
+                    currentTime = currentTime,
+                    onCurrentTimeChange = { currentTime = it },
+                    totalTime = totalTime,
+                    counter = counter,
+                    onCounterChange = { counter = it },
+                    isTimerRunning,
+                    onIsTimerRunningChange = { isTimerRunning = it }
+
+                )
+                /////////////// TODO
+                if ((isTimerRunning && currentTime != totalTime)) {  // TODO
+                    //|| (!isTimerRunning && currentTime == totalTime)    ){
+
+                    ResetButton(currentTime = currentTime,
+                        onCurrentTimeChange = { currentTime = it },
+                        totalTime = totalTime,
+                        counter = counter,
+                        onCounterChange = { counter = it },
+                        isTimerRunning,
+                        onIsTimerRunningChange = { isTimerRunning = it })
+
+
+                }
+                ///////////////////
+            }//--row
+        }
     }
 
-
 @Composable
-fun resetButton(){
+fun ResetButton(currentTime:Long,
+                onCurrentTimeChange:(Long) -> Unit,
+                totalTime: Long,
+                counter:Int,
+                onCounterChange:(Int) -> Unit,
+                isTimerRunning:Boolean,
+                onIsTimerRunningChange:(Boolean) -> Unit){
     // TODO
+    Button(
+        onClick = {
+            onCurrentTimeChange(totalTime)
+            onCounterChange(10)
+            onIsTimerRunningChange(false)
+        },
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = Color.Green
+
+        )
+    ) {
+        Text(
+            text = "Reset"
+        )
+    }
+
 }
 
 
 
+
+
+// end reset button
+
+/*
+@Composable
+fun ResetButton(
+    currentTime: Long,
+    onCurrentTimeChange: () -> Unit,
+    totalTime: Long,
+    counter: Int,
+    onCounterChange: () -> Unit,
+    timerRunning: Boolean,
+    onIsTimerRunningChange: () -> Unit
+) {
+    TODO("Not yet implemented")
+}
+*/
 
 @Composable
 fun TimerCountTextfield(currentTime:Long){
@@ -326,7 +359,16 @@ fun ButtonStartPause(
             else if (!isTimerRunning && currentTime > 0L) "Continue"
             else "Restart"
         )
+        //trace("gfh")
 
+        //---------
+        if (isTimerRunning && currentTime > 0L) "Pause"
+        else if (!isTimerRunning && currentTime == totalTime) "Start"
+        else if (!isTimerRunning && currentTime > 0L)
+        else {
+            Log.DEBUG("istimerrunning " + !isTimerRunning + "  creenttime  " + currentTime)
+        }
+        //-----------
     }
 }
 

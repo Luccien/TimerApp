@@ -123,7 +123,14 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-            TimerCountTextfield(currentTime = currentTime)
+
+            //--------
+            if (isTimerRunning && currentTime > 0L) { TimerCountTextfield(currentTime = currentTime)}
+           else if (!isTimerRunning && currentTime == totalTime) {}
+           else if (!isTimerRunning && currentTime > 0L){ TimerCountTextfield(currentTime = currentTime)}
+            //------
+
+
 
 
 
@@ -239,7 +246,9 @@ fun SetTimeForTimer(currentTime:Long,
             Button(
                 onClick = {
                     // add one minute
-                    onTotalTimeChange(totalTime + (1000L*60) )
+                    val timeChange =totalTime + (1000L*60)
+                    onTotalTimeChange(timeChange)
+                    onCurrentTimeChange(timeChange)
                 }) {
                 Image(
                     painterResource(id = R.drawable.ic_baseline_arrow_upward_24),
@@ -250,7 +259,9 @@ fun SetTimeForTimer(currentTime:Long,
             Button(
                 onClick = {
                     // subtract one minute
-                    onTotalTimeChange(totalTime + (1000L) )
+                    val timeChange =totalTime + (1000L)
+                    onTotalTimeChange(timeChange)
+                    onCurrentTimeChange(timeChange)
                 }) {
                 Image(
                     painterResource(id = R.drawable.ic_baseline_arrow_upward_24),
@@ -270,6 +281,7 @@ fun SetTimeForTimer(currentTime:Long,
                     val newTime = totalTime - (60 * 1000L)
                     if(newTime>0) {
                         onTotalTimeChange(newTime)
+                        onCurrentTimeChange(newTime)
                     }
                 }) {
                 Image(
@@ -284,6 +296,7 @@ fun SetTimeForTimer(currentTime:Long,
                     val newTime = totalTime - (1000L)
                     if(newTime>0) {
                         onTotalTimeChange(newTime)
+                        onCurrentTimeChange(newTime)
                     }
                 }) {
                 Image(

@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
         strokeWidth: Dp = 5.dp
     ) {
 
-        val pictureAmount = 12-1 // one less than actual pictures are there
+        val pictureAmount = 11-1 // one less than actual pictures are there
 
         var totalTime by remember {
             mutableStateOf(12L * 1000L)
@@ -262,38 +262,21 @@ fun ShowCard(pictureNumber:Int,currentTime:Long,totalTime:Long){
                 contentDescription = null
             )}
         else if(pictureNumber == 10){
-            Image(
-                painter = painterResource(id = R.drawable.p10),
-                contentDescription = null
-            )}
-        else if(pictureNumber == 11) {
-            //if (currentTime == 0L) {
-/*
-                Image(
-                painter = painterResource(id = R.drawable.p3),
-                contentDescription = null
-            )
-*/
-
             if (currentTime == 0L) {
-                Image(
-                    painter = painterResource(id = R.drawable.p3),
-                    contentDescription = null
-                )
-            }
-        else{
                 Image(
                     painter = painterResource(id = R.drawable.p11),
                     contentDescription = null
                 )
             }
+            else{
+                Image(
+                    painter = painterResource(id = R.drawable.p10),
+                    contentDescription = null
+                )
+            }
+
         }
-        /*
-        else if(counter == 12){
-            Image(
-                painter = painterResource(id = R.drawable.p12),
-                contentDescription = null
-            )}*/
+
     }
 }
 

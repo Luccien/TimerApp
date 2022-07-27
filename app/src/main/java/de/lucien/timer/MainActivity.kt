@@ -58,27 +58,28 @@ class MainActivity : ComponentActivity() {
         inactiveBarColor: Color,
         activeBarColor: Color,
         modifier: Modifier = Modifier,
-        initialValue: Float = 1f,
+        //initialValue: Float = 1f,
         strokeWidth: Dp = 5.dp
     ) {
 
-        val pictureAmount = 12
+        val pictureAmount = 12-1 // one less than actual pictures are there
 
         var totalTime by remember {
-            mutableStateOf(24L * 1000L)
+            mutableStateOf(12L * 1000L)
         }
 
         var counter by remember {
-            mutableStateOf(12)
+            mutableStateOf(pictureAmount)
         }
 
 
         var size by remember {
             mutableStateOf(IntSize.Zero)
         }
+        /*
         var value by remember {
             mutableStateOf(initialValue)
-        }
+        }*/
         var currentTime by remember {
             mutableStateOf(totalTime)
         }
@@ -95,12 +96,7 @@ class MainActivity : ComponentActivity() {
             if (currentTime > 0 && isTimerRunning) {
                 delay(1000L)
                 currentTime -= 1000L
-                /*
-                delay(timeDelay)
-                currentTime -= timeDelay
-                counter--
-                */
-                value = currentTime / totalTime.toFloat()
+                //value = currentTime / totalTime.toFloat()
             }
         }
 
@@ -126,39 +122,19 @@ class MainActivity : ComponentActivity() {
             }
 
 
+
+
             //--------
             if (isTimerRunning && currentTime > 0L) {
                 TimerCountTextfield(currentTime = currentTime)
-                //------
-/*
-                ShowHangman(
-                    pictureAmount = pictureAmount,
-                    currentTime = currentTime,
-                    totalTime = totalTime,
-                    counter = counter,
-                    onCounterChange = { counter = it },
-                    timeToShowNextPicture = timeToShowNextPicture,
-                    onTimeToShowNextPictureChange = { timeToShowNextPicture = it })
-                //------
-*/
             }
            else if (!isTimerRunning && currentTime == totalTime) {}
            else if (!isTimerRunning && currentTime > 0L){
                TimerCountTextfield(currentTime = currentTime)
-                //------
-               /* ShowHangman(
-                    pictureAmount = pictureAmount,
-                    currentTime = currentTime,
-                    totalTime = totalTime,
-                    counter = counter,
-                    onCounterChange = { counter = it },
-                    timeToShowNextPicture = timeToShowNextPicture,
-                    onTimeToShowNextPictureChange = { timeToShowNextPicture = it })
-
-                */
-                //------
            }
             //------
+
+
 
             //------
             ShowHangman(
@@ -181,15 +157,19 @@ class MainActivity : ComponentActivity() {
                     counter = counter,
                     onCounterChange = { counter = it },
                     isTimerRunning,
-                    onIsTimerRunningChange = { isTimerRunning = it }
-                )
+                    onIsTimerRunningChange = { isTimerRunning = it },
+                    onTimeToShowNextPictureChange = { timeToShowNextPicture = it },
+                    pictureAmount = pictureAmount)
+
                         ResetButton(currentTime = currentTime,
                             onCurrentTimeChange = { currentTime = it },
                             totalTime = totalTime,
                             counter = counter,
                             onCounterChange = { counter = it },
                             isTimerRunning,
-                            onIsTimerRunningChange = { isTimerRunning = it })
+                            onIsTimerRunningChange = { isTimerRunning = it },
+                            onTimeToShowNextPictureChange = { timeToShowNextPicture = it },
+                            pictureAmount = pictureAmount)
 
             }//--row
         }
@@ -210,7 +190,7 @@ fun ShowHangman(pictureAmount:Int,
 
 
     if(currentTime <= timeToShowNextPicture ){
-        if( (counter-1) >=  1) {
+        if( (counter-1) >=  0) { // 2 - 1 >= 1 // 2 ist letzter counter wert
 
             /////////////////
             val timePerPicture = totalTime/pictureAmount
@@ -220,77 +200,100 @@ fun ShowHangman(pictureAmount:Int,
             onCounterChange(counter - 1)
             /////////////////
         }
-    }
-    ShowCard(pictureAmount - counter)
+    } // 11 -2 // 1 er abgezogen // aber nicht sofort --> 1 ist -- 11 ist letzter
+    ShowCard(pictureNumber=pictureAmount - counter,currentTime=currentTime,totalTime=totalTime)
 }
 
 
 
 @Composable
-fun ShowCard(counter:Int){
+fun ShowCard(pictureNumber:Int,currentTime:Long,totalTime:Long){
     Card(
         elevation = 4.dp,
     ) {
-        if(counter == 1){
+        if(pictureNumber == 0){
+            Image(
+                painter = painterResource(id = R.drawable.p0),
+                contentDescription = null
+            )}
+        if(pictureNumber == 1){
             Image(
                 painter = painterResource(id = R.drawable.p1),
                 contentDescription = null
             )}
-        else if(counter == 2){
+        else if(pictureNumber == 2){
             Image(
                 painter = painterResource(id = R.drawable.p2),
                 contentDescription = null
             )}
-        else if(counter == 3){
+        else if(pictureNumber == 3){
             Image(
                 painter = painterResource(id = R.drawable.p3),
                 contentDescription = null
             )}
-        else if(counter == 4){
+        else if(pictureNumber == 4){
             Image(
                 painter = painterResource(id = R.drawable.p4),
                 contentDescription = null
             )}
-        else if(counter == 5){
+        else if(pictureNumber == 5){
             Image(
                 painter = painterResource(id = R.drawable.p5),
                 contentDescription = null
             )}
-        else if(counter == 6){
+        else if(pictureNumber == 6){
             Image(
                 painter = painterResource(id = R.drawable.p6),
                 contentDescription = null
             )}
-        else if(counter == 7){
+        else if(pictureNumber == 7){
             Image(
                 painter = painterResource(id = R.drawable.p7),
                 contentDescription = null
             )}
-        else if(counter == 8){
+        else if(pictureNumber == 8){
             Image(
                 painter = painterResource(id = R.drawable.p8),
                 contentDescription = null
             )}
-        else if(counter == 9){
+        else if(pictureNumber == 9){
             Image(
                 painter = painterResource(id = R.drawable.p9),
                 contentDescription = null
             )}
-        else if(counter == 10){
+        else if(pictureNumber == 10){
             Image(
                 painter = painterResource(id = R.drawable.p10),
                 contentDescription = null
             )}
-        else if(counter == 11){
-            Image(
-                painter = painterResource(id = R.drawable.p11),
+        else if(pictureNumber == 11) {
+            //if (currentTime == 0L) {
+/*
+                Image(
+                painter = painterResource(id = R.drawable.p3),
                 contentDescription = null
-            )}
+            )
+*/
+
+            if (currentTime == 0L) {
+                Image(
+                    painter = painterResource(id = R.drawable.p3),
+                    contentDescription = null
+                )
+            }
+        else{
+                Image(
+                    painter = painterResource(id = R.drawable.p11),
+                    contentDescription = null
+                )
+            }
+        }
+        /*
         else if(counter == 12){
             Image(
                 painter = painterResource(id = R.drawable.p12),
                 contentDescription = null
-            )}
+            )}*/
     }
 }
 
@@ -308,13 +311,23 @@ fun ResetButton(
                 counter:Int,
                 onCounterChange:(Int) -> Unit,
                 isTimerRunning:Boolean,
-                onIsTimerRunningChange:(Boolean) -> Unit){
-    // TODO
+                onIsTimerRunningChange:(Boolean) -> Unit,
+                onTimeToShowNextPictureChange: (Long) -> Unit,
+                pictureAmount:Int,)
+
+{
+
     Button(
         onClick = {
             onCurrentTimeChange(totalTime)
-            onCounterChange(12)
+            onCounterChange(pictureAmount)
             onIsTimerRunningChange(false)
+
+            //////////////
+            val timePerPicture = totalTime/pictureAmount
+            onTimeToShowNextPictureChange( (pictureAmount) * timePerPicture)
+            ///////////////
+
         },
         colors = ButtonDefaults.buttonColors(
             backgroundColor = Color.Green
@@ -460,15 +473,21 @@ fun ButtonStartPause(
                      onCounterChange:(Int) -> Unit,
                      isTimerRunning:Boolean,
                      onIsTimerRunningChange:(Boolean) -> Unit,
+                     onTimeToShowNextPictureChange: (Long) -> Unit,
+                     pictureAmount:Int,)
 
-) {
+{
 
     Button(
         onClick = {
             if (currentTime <= 0L) {
                 onCurrentTimeChange(totalTime)
-                onCounterChange(12)
+                onCounterChange(pictureAmount)
                 onIsTimerRunningChange(true)
+                //////////////
+                val timePerPicture = totalTime/pictureAmount
+                onTimeToShowNextPictureChange( (pictureAmount) * timePerPicture)
+                ///////////////
 
             } else {
                 onIsTimerRunningChange(!isTimerRunning)
@@ -493,13 +512,14 @@ fun ButtonStartPause(
         //trace("gfh")
 
         //---------
+        /*
         if (isTimerRunning && currentTime > 0L) "Pause"
         else if (!isTimerRunning && currentTime == totalTime) "Start"
         else if (!isTimerRunning && currentTime > 0L)
         else {
             //Log.DEBUG("istimerrunning " + !isTimerRunning + "  creenttime  " + currentTime)
-            Log.d("tag", "istimerrunning " + !isTimerRunning + "  creenttime  " + currentTime)
-        }
+            //Log.d("tag", "istimerrunning " + !isTimerRunning + "  creenttime  " + currentTime)
+        }*/
         //-----------
     }
 }

@@ -1,8 +1,6 @@
 package de.lucien.timer
 
 import android.os.Bundle
-import android.util.Log
-import android.util.Log.DEBUG
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -11,10 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
@@ -36,10 +31,10 @@ class MainActivity : ComponentActivity() {
                 Box(
                 ) {
                     Timer(
-                        handleColor = Color.Green,
+                       /* handleColor = Color.Green,
                         inactiveBarColor = Color.DarkGray,
                         activeBarColor = Color(0xFF37B900),
-                        modifier = Modifier.size(200.dp)
+                        modifier = Modifier.size(200.dp)*/
                     )
                 }
             }
@@ -54,12 +49,12 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun Timer(
         //totalTime: Long,
-        handleColor: Color,
+        /*handleColor: Color,
         inactiveBarColor: Color,
         activeBarColor: Color,
         modifier: Modifier = Modifier,
         //initialValue: Float = 1f,
-        strokeWidth: Dp = 5.dp
+        strokeWidth: Dp = 5.dp*/
     ) {
 
         val pictureAmount = 11-1 // one less than actual pictures are there
@@ -72,10 +67,12 @@ class MainActivity : ComponentActivity() {
             mutableStateOf(pictureAmount)
         }
 
-
+/*
         var size by remember {
             mutableStateOf(IntSize.Zero)
         }
+
+ */
         /*
         var value by remember {
             mutableStateOf(initialValue)
@@ -108,6 +105,32 @@ class MainActivity : ComponentActivity() {
         ) {
 
 
+
+
+            if (isTimerRunning && currentTime > 0L) {}
+            else if (!isTimerRunning && currentTime == totalTime) {SetTimeForTimer(
+                currentTime = currentTime,
+                onCurrentTimeChange = { currentTime = it },
+                totalTime = totalTime,
+                onTotalTimeChange = { totalTime = it },
+                counter = counter,
+                onCounterChange = { counter = it },
+                isTimerRunning,
+                onIsTimerRunningChange = { isTimerRunning = it },
+            )}
+            else if (!isTimerRunning && currentTime > 0L) {}
+            else {SetTimeForTimer(
+                currentTime = currentTime,
+                onCurrentTimeChange = { currentTime = it },
+                totalTime = totalTime,
+                onTotalTimeChange = { totalTime = it },
+                counter = counter,
+                onCounterChange = { counter = it },
+                isTimerRunning,
+                onIsTimerRunningChange = { isTimerRunning = it },
+            )}
+
+            /*
             if ((!isTimerRunning && currentTime == totalTime) || (isTimerRunning && currentTime <= 0L)) {
                 SetTimeForTimer(
                     currentTime = currentTime,
@@ -120,7 +143,7 @@ class MainActivity : ComponentActivity() {
                     onIsTimerRunningChange = { isTimerRunning = it },
                 )
             }
-
+*/
 
 
 
@@ -425,6 +448,8 @@ fun showTimeInMinAndSec(timeInMilliS:Long){
     val min:Int = (allSec/60).toInt()
     val secLeft:Long = allSec - (min*60)
 
+    // TODO --- STRING wenn länge kurz dann + 0
+
     Text(
         text = min.toString(),
         fontSize = 44.sp,
@@ -495,14 +520,30 @@ fun ButtonStartPause(
         //trace("gfh")
 
         //---------
+
         /*
-        if (isTimerRunning && currentTime > 0L) "Pause"
-        else if (!isTimerRunning && currentTime == totalTime) "Start"
+        if (isTimerRunning && currentTime > 0L) {}
+        else if (!isTimerRunning && currentTime == totalTime) {}
         else if (!isTimerRunning && currentTime > 0L)
         else {
+
+            //---------
+            onCurrentTimeChange(totalTime)
+            onCounterChange(pictureAmount)
+            onIsTimerRunningChange(false)
+
+            //////////////
+            val timePerPicture = totalTime/pictureAmount
+            onTimeToShowNextPictureChange( (pictureAmount) * timePerPicture)
+            //------------
+
+
+            ///////////////
             //Log.DEBUG("istimerrunning " + !isTimerRunning + "  creenttime  " + currentTime)
             //Log.d("tag", "istimerrunning " + !isTimerRunning + "  creenttime  " + currentTime)
-        }*/
+        }
+
+         */
         //-----------
     }
 }

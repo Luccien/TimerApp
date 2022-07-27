@@ -130,7 +130,7 @@ class MainActivity : ComponentActivity() {
             if (isTimerRunning && currentTime > 0L) {
                 TimerCountTextfield(currentTime = currentTime)
                 //------
-
+/*
                 ShowHangman(
                     pictureAmount = pictureAmount,
                     currentTime = currentTime,
@@ -140,13 +140,13 @@ class MainActivity : ComponentActivity() {
                     timeToShowNextPicture = timeToShowNextPicture,
                     onTimeToShowNextPictureChange = { timeToShowNextPicture = it })
                 //------
-
+*/
             }
            else if (!isTimerRunning && currentTime == totalTime) {}
            else if (!isTimerRunning && currentTime > 0L){
                TimerCountTextfield(currentTime = currentTime)
                 //------
-                ShowHangman(
+               /* ShowHangman(
                     pictureAmount = pictureAmount,
                     currentTime = currentTime,
                     totalTime = totalTime,
@@ -154,11 +154,23 @@ class MainActivity : ComponentActivity() {
                     onCounterChange = { counter = it },
                     timeToShowNextPicture = timeToShowNextPicture,
                     onTimeToShowNextPictureChange = { timeToShowNextPicture = it })
+
+                */
                 //------
-
-
            }
             //------
+
+            //------
+            ShowHangman(
+                pictureAmount = pictureAmount,
+                currentTime = currentTime,
+                totalTime = totalTime,
+                counter = counter,
+                onCounterChange = { counter = it },
+                timeToShowNextPicture = timeToShowNextPicture,
+                onTimeToShowNextPictureChange = { timeToShowNextPicture = it })
+            //------
+
 
             Row() { // --row
                 /////////////////
@@ -194,8 +206,8 @@ fun ShowHangman(pictureAmount:Int,
                 timeToShowNextPicture:Long,
                 onTimeToShowNextPictureChange: (Long) -> Unit)
 {
+// counts down
 
-    ShowCard(counter)
 
     if(currentTime <= timeToShowNextPicture ){
         if( (counter-1) >=  1) {
@@ -209,6 +221,7 @@ fun ShowHangman(pictureAmount:Int,
             /////////////////
         }
     }
+    ShowCard(pictureAmount - counter)
 }
 
 

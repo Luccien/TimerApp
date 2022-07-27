@@ -69,7 +69,7 @@ class MainActivity : ComponentActivity() {
         }
 
         var counter by remember {
-            mutableStateOf(1)
+            mutableStateOf(12)
         }
 
 
@@ -130,6 +130,7 @@ class MainActivity : ComponentActivity() {
             if (isTimerRunning && currentTime > 0L) {
                 TimerCountTextfield(currentTime = currentTime)
                 //------
+
                 ShowHangman(
                     pictureAmount = pictureAmount,
                     currentTime = currentTime,
@@ -193,20 +194,18 @@ fun ShowHangman(pictureAmount:Int,
                 timeToShowNextPicture:Long,
                 onTimeToShowNextPictureChange: (Long) -> Unit)
 {
-   // ShowCard111(counter)
-    //ShowCard(counter)
 
-    //24L * 1000L
+    ShowCard(counter)
 
     if(currentTime <= timeToShowNextPicture ){
-        if( (counter+1) <=  pictureAmount) {
+        if( (counter-1) >=  1) {
 
             /////////////////
             val timePerPicture = totalTime/pictureAmount
             //val timeToShowNextPicture = counter * timePerPicture
-            onTimeToShowNextPictureChange( (counter+1) * timePerPicture)
-            ShowCard(counter+1)
-            onCounterChange(counter + 1)
+            onTimeToShowNextPictureChange( (counter-1) * timePerPicture)
+            //ShowCard(counter-1)
+            onCounterChange(counter - 1)
             /////////////////
         }
     }
@@ -301,7 +300,7 @@ fun ResetButton(
     Button(
         onClick = {
             onCurrentTimeChange(totalTime)
-            onCounterChange(1)
+            onCounterChange(12)
             onIsTimerRunningChange(false)
         },
         colors = ButtonDefaults.buttonColors(
@@ -455,7 +454,7 @@ fun ButtonStartPause(
         onClick = {
             if (currentTime <= 0L) {
                 onCurrentTimeChange(totalTime)
-                onCounterChange(1)
+                onCounterChange(12)
                 onIsTimerRunningChange(true)
 
             } else {

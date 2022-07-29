@@ -101,7 +101,7 @@ class MainActivity : ComponentActivity() {
             modifier = Modifier
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly // TODO CHANGE
+            verticalArrangement = Arrangement.SpaceAround    //.SpaceEvenly // TODO CHANGE
         ) {
 
 
@@ -120,6 +120,17 @@ class MainActivity : ComponentActivity() {
                     timeToShowNextPicture = timeToShowNextPicture,
                     onTimeToShowNextPictureChange = { timeToShowNextPicture = it })
                 //------
+            }else{
+                /////
+                Card(
+                    elevation = 4.dp,
+                ) {
+                Image(
+                    painter = painterResource(id = R.drawable.pleer),
+                    contentDescription = null
+                )
+                }
+                ///////
             }
 
             Row() { // --row

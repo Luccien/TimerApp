@@ -108,7 +108,8 @@ class MainActivity : ComponentActivity() {
 
 
             if (isTimerRunning && currentTime > 0L) {}
-            else if (!isTimerRunning && currentTime == totalTime) {SetTimeForTimer(
+            else if (!isTimerRunning && currentTime == totalTime) {
+                SetTimeForTimer(
                 currentTime = currentTime,
                 onCurrentTimeChange = { currentTime = it },
                 totalTime = totalTime,
@@ -119,7 +120,9 @@ class MainActivity : ComponentActivity() {
                 onIsTimerRunningChange = { isTimerRunning = it },
             )}
             else if (!isTimerRunning && currentTime > 0L) {}
-            else {SetTimeForTimer(
+            else {
+
+               /* SetTimeForTimer(
                 currentTime = currentTime,
                 onCurrentTimeChange = { currentTime = it },
                 totalTime = totalTime,
@@ -128,7 +131,10 @@ class MainActivity : ComponentActivity() {
                 onCounterChange = { counter = it },
                 isTimerRunning,
                 onIsTimerRunningChange = { isTimerRunning = it },
-            )}
+
+
+            )*/
+            }
 
             /*
             if ((!isTimerRunning && currentTime == totalTime) || (isTimerRunning && currentTime <= 0L)) {
@@ -158,18 +164,18 @@ class MainActivity : ComponentActivity() {
             //------
 
 
-
-            //------
-            ShowHangman(
-                pictureAmount = pictureAmount,
-                currentTime = currentTime,
-                totalTime = totalTime,
-                counter = counter,
-                onCounterChange = { counter = it },
-                timeToShowNextPicture = timeToShowNextPicture,
-                onTimeToShowNextPictureChange = { timeToShowNextPicture = it })
-            //------
-
+            if(isTimerRunning ) {
+                //------
+                ShowHangman(
+                    pictureAmount = pictureAmount,
+                    currentTime = currentTime,
+                    totalTime = totalTime,
+                    counter = counter,
+                    onCounterChange = { counter = it },
+                    timeToShowNextPicture = timeToShowNextPicture,
+                    onTimeToShowNextPictureChange = { timeToShowNextPicture = it })
+                //------
+            }
 
             Row() { // --row
                 /////////////////
@@ -331,15 +337,20 @@ fun ResetButton(
 
     Button(
         onClick = {
+
+            onCurrentTimeChange(totalTime)
+            onCounterChange(pictureAmount)
+            onIsTimerRunningChange(false) // ONLY THIS STAYS
+            /*
             onCurrentTimeChange(totalTime)
             onCounterChange(pictureAmount)
             onIsTimerRunningChange(false)
 
-            //////////////
+            ////////////// TODO  CAN ALL GET OUT except for --onIsTimerRunningChange(false)
             val timePerPicture = totalTime/pictureAmount
             onTimeToShowNextPictureChange( (pictureAmount) * timePerPicture)
             ///////////////
-
+             */
         },
         colors = ButtonDefaults.buttonColors(
             backgroundColor = Color.Green
@@ -496,7 +507,8 @@ fun ButtonStartPause(
 
     Button(
         onClick = {
-            if (currentTime <= 0L) {
+            if (currentTime <= 0L) { // this is for continue
+                //----------
                 onCurrentTimeChange(totalTime)
                 onCounterChange(pictureAmount)
                 onIsTimerRunningChange(true)
@@ -504,9 +516,21 @@ fun ButtonStartPause(
                 val timePerPicture = totalTime/pictureAmount
                 onTimeToShowNextPictureChange( (pictureAmount) * timePerPicture)
                 ///////////////
+                //-----------
 
             } else {
-                if(!isTimerRunning){onIsTimerRunningChange(true)}
+                if(!isTimerRunning){
+                    onIsTimerRunningChange(true)
+                    //----------
+                    onCurrentTimeChange(totalTime)
+                    onCounterChange(pictureAmount)
+                    //////////////
+                    val timePerPicture = totalTime/pictureAmount
+                    onTimeToShowNextPictureChange( (pictureAmount) * timePerPicture)
+                    ///////////////
+                    //-----------
+
+                }
                 //onIsTimerRunningChange(!isTimerRunning) --KEEP OLD VERSION
             }
         },

@@ -173,26 +173,32 @@ class MainActivity : ComponentActivity() {
 
             Row() { // --row
                 /////////////////
-                ButtonStartPause(
-                    currentTime = currentTime,
-                    onCurrentTimeChange = { currentTime = it },
-                    totalTime = totalTime,
-                    counter = counter,
-                    onCounterChange = { counter = it },
-                    isTimerRunning,
-                    onIsTimerRunningChange = { isTimerRunning = it },
-                    onTimeToShowNextPictureChange = { timeToShowNextPicture = it },
-                    pictureAmount = pictureAmount)
-
-                        ResetButton(currentTime = currentTime,
-                            onCurrentTimeChange = { currentTime = it },
-                            totalTime = totalTime,
-                            counter = counter,
-                            onCounterChange = { counter = it },
-                            isTimerRunning,
-                            onIsTimerRunningChange = { isTimerRunning = it },
-                            onTimeToShowNextPictureChange = { timeToShowNextPicture = it },
-                            pictureAmount = pictureAmount)
+                if(!isTimerRunning ) {
+                    ButtonStartPause( // IS ONLY START BUTTON NOW!!!
+                        currentTime = currentTime,
+                        onCurrentTimeChange = { currentTime = it },
+                        totalTime = totalTime,
+                        counter = counter,
+                        onCounterChange = { counter = it },
+                        isTimerRunning,
+                        onIsTimerRunningChange = { isTimerRunning = it },
+                        onTimeToShowNextPictureChange = { timeToShowNextPicture = it },
+                        pictureAmount = pictureAmount
+                    )
+                }
+                if(isTimerRunning ) {
+                    ResetButton(
+                        currentTime = currentTime,
+                        onCurrentTimeChange = { currentTime = it },
+                        totalTime = totalTime,
+                        counter = counter,
+                        onCounterChange = { counter = it },
+                        isTimerRunning,
+                        onIsTimerRunningChange = { isTimerRunning = it },
+                        onTimeToShowNextPictureChange = { timeToShowNextPicture = it },
+                        pictureAmount = pictureAmount
+                    )
+                }
 
             }//--row
         }
@@ -486,6 +492,8 @@ fun ButtonStartPause(
 
 {
 
+    //if(!isTimerRunning )
+
     Button(
         onClick = {
             if (currentTime <= 0L) {
@@ -498,7 +506,8 @@ fun ButtonStartPause(
                 ///////////////
 
             } else {
-                onIsTimerRunningChange(!isTimerRunning)
+                if(!isTimerRunning){onIsTimerRunningChange(true)}
+                //onIsTimerRunningChange(!isTimerRunning) --KEEP OLD VERSION
             }
         },
 
@@ -512,9 +521,9 @@ fun ButtonStartPause(
         )
     ) {
         Text(
-            text = if (isTimerRunning && currentTime > 0L) "Pause"
+            text = if (isTimerRunning && currentTime > 0L) "Pause" // PAUSE IS NOT NEEDED
             else if (!isTimerRunning && currentTime == totalTime) "Start"
-            else if (!isTimerRunning && currentTime > 0L) "Continue"
+            else if (!isTimerRunning && currentTime > 0L) "Continue" // CONTINUE IS NOT NEEDED
             else "Restart"
         )
         //trace("gfh")
@@ -545,6 +554,7 @@ fun ButtonStartPause(
 
          */
         //-----------
+
     }
 }
 

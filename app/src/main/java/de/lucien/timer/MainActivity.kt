@@ -101,67 +101,12 @@ class MainActivity : ComponentActivity() {
             modifier = Modifier
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly
+            verticalArrangement = Arrangement.SpaceEvenly // TODO CHANGE
         ) {
 
 
 
 
-            if (isTimerRunning && currentTime > 0L) {}
-            else if (!isTimerRunning && currentTime == totalTime) {
-                SetTimeForTimer(
-                currentTime = currentTime,
-                onCurrentTimeChange = { currentTime = it },
-                totalTime = totalTime,
-                onTotalTimeChange = { totalTime = it },
-                counter = counter,
-                onCounterChange = { counter = it },
-                isTimerRunning,
-                onIsTimerRunningChange = { isTimerRunning = it },
-            )}
-            else if (!isTimerRunning && currentTime > 0L) {}
-            else {
-
-               /* SetTimeForTimer(
-                currentTime = currentTime,
-                onCurrentTimeChange = { currentTime = it },
-                totalTime = totalTime,
-                onTotalTimeChange = { totalTime = it },
-                counter = counter,
-                onCounterChange = { counter = it },
-                isTimerRunning,
-                onIsTimerRunningChange = { isTimerRunning = it },
-
-
-            )*/
-            }
-
-            /*
-            if ((!isTimerRunning && currentTime == totalTime) || (isTimerRunning && currentTime <= 0L)) {
-                SetTimeForTimer(
-                    currentTime = currentTime,
-                    onCurrentTimeChange = { currentTime = it },
-                    totalTime = totalTime,
-                    onTotalTimeChange = { totalTime = it },
-                    counter = counter,
-                    onCounterChange = { counter = it },
-                    isTimerRunning,
-                    onIsTimerRunningChange = { isTimerRunning = it },
-                )
-            }
-*/
-
-
-
-            //--------
-            if (isTimerRunning && currentTime > 0L) {
-                TimerCountTextfield(currentTime = currentTime)
-            }
-           else if (!isTimerRunning && currentTime == totalTime) {}
-           else if (!isTimerRunning && currentTime > 0L){
-               TimerCountTextfield(currentTime = currentTime)
-           }
-            //------
 
 
             if(isTimerRunning ) {
@@ -207,6 +152,36 @@ class MainActivity : ComponentActivity() {
                 }
 
             }//--row
+
+
+            //-------
+            //if (isTimerRunning && currentTime > 0L) {}
+            //else if (!isTimerRunning && currentTime == totalTime) {
+            if (!isTimerRunning && currentTime == totalTime) {
+                SetTimeForTimer(
+                    currentTime = currentTime,
+                    onCurrentTimeChange = { currentTime = it },
+                    totalTime = totalTime,
+                    onTotalTimeChange = { totalTime = it },
+                    counter = counter,
+                    onCounterChange = { counter = it },
+                    isTimerRunning,
+                    onIsTimerRunningChange = { isTimerRunning = it },
+                )}
+            //------
+
+
+
+            //--------
+            if (isTimerRunning && currentTime > 0L) {
+                TimerCountTextfield(currentTime = currentTime)
+            }
+            else if (!isTimerRunning && currentTime == totalTime) {}
+            else if (!isTimerRunning && currentTime > 0L){
+                TimerCountTextfield(currentTime = currentTime)
+            }
+            //------
+
         }
     }
 

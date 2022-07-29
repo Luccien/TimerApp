@@ -451,10 +451,22 @@ fun showTimeInMinAndSec(timeInMilliS:Long){
     val min:Int = (allSec/60).toInt()
     val secLeft:Long = allSec - (min*60)
 
-    // TODO --- STRING wenn länge kurz dann + 0
+
+    var minSt:String = min.toString()
+    var secLeftSt:String = secLeft.toString()
+
+    if(minSt.length ==1){
+        minSt ="0" + minSt
+    }
+    else if(minSt.length ==0){
+        minSt ="00"
+    }
+    if(secLeftSt.length ==1){
+        secLeftSt ="0" + secLeftSt
+    }
 
     Text(
-        text = min.toString(),
+        text = minSt,
         fontSize = 44.sp,
         fontWeight = FontWeight.Bold,
         color = Color.White
@@ -466,7 +478,7 @@ fun showTimeInMinAndSec(timeInMilliS:Long){
         color = Color.White
     )
     Text(
-        text = secLeft.toString(),
+        text = secLeftSt,
         fontSize = 44.sp,
         fontWeight = FontWeight.Bold,
         color = Color.White

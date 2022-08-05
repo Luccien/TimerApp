@@ -1,5 +1,6 @@
 package de.lucien.timer
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import androidx.compose.foundation.Image
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 
@@ -40,6 +42,15 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun Timer(
     ) {
+
+        // Fetching the local context
+        val mContext = LocalContext.current
+
+        // Declaring and Initializing
+        // the MediaPlayer to play "audio.mp3"
+        val mMediaPlayer = MediaPlayer.create(mContext, R.raw.bells)
+
+
 
         val pictureAmount = 11-1 // one less than actual pictures are there
 
@@ -95,7 +106,10 @@ class MainActivity : ComponentActivity() {
                         counter = counter,
                         onCounterChange = { counter = it },
                         timeToShowNextPicture = timeToShowNextPicture,
-                        onTimeToShowNextPictureChange = { timeToShowNextPicture = it })
+                        onTimeToShowNextPictureChange = { timeToShowNextPicture = it },
+                        mMediaPlayer = mMediaPlayer
+                        )
+
                     //------
                 } else {
                     /////
@@ -184,7 +198,8 @@ fun ShowHangman(pictureAmount:Int,
                 counter: Int,
                 onCounterChange: (Int) -> Unit,
                 timeToShowNextPicture:Long,
-                onTimeToShowNextPictureChange: (Long) -> Unit)
+                onTimeToShowNextPictureChange: (Long) -> Unit,
+                mMediaPlayer : MediaPlayer)
 {
 
     if(currentTime <= timeToShowNextPicture ){
@@ -197,13 +212,14 @@ fun ShowHangman(pictureAmount:Int,
             /////////////////
         }
     } // 11 -2 // 1 er abgezogen // aber nicht sofort --> 1 ist -- 11 ist letzter
-    ShowCard(pictureNumber=pictureAmount - counter,currentTime=currentTime,totalTime=totalTime)
+    ShowCard(pictureNumber=pictureAmount - counter,currentTime=currentTime,totalTime=totalTime, mMediaPlayer=mMediaPlayer)
 }
 
 
 
 @Composable
-fun ShowCard(pictureNumber:Int,currentTime:Long,totalTime:Long){
+fun ShowCard(pictureNumber:Int,currentTime:Long,totalTime:Long,
+             mMediaPlayer : MediaPlayer){
     Card(
         elevation = 4.dp,
     ) {
@@ -263,6 +279,7 @@ fun ShowCard(pictureNumber:Int,currentTime:Long,totalTime:Long){
                     painter = painterResource(id = R.drawable.p11),
                     contentDescription = null
                 )
+                mMediaPlayer.start()
             }
             else{
                 Image(

@@ -26,20 +26,9 @@ class MainActivity : ComponentActivity() {
         setContent {
            Surface(
                 color = Color(0xFF101010),
-               // modifier = Modifier.fillMaxSize()
-            ) {
-                /*Box(
-                ) {*/
-                    Timer(
-                       /* handleColor = Color.Green,
-                        inactiveBarColor = Color.DarkGray,
-                        activeBarColor = Color(0xFF37B900),
-                        modifier = Modifier.size(200.dp)*/
-                    )
-
-
+           ) {
+               Timer()
                 }
-          //  }
         }
     }
 }
@@ -50,13 +39,6 @@ class MainActivity : ComponentActivity() {
     @Preview
     @Composable
     fun Timer(
-        //totalTime: Long,
-        /*handleColor: Color,
-        inactiveBarColor: Color,
-        activeBarColor: Color,
-        modifier: Modifier = Modifier,
-        //initialValue: Float = 1f,
-        strokeWidth: Dp = 5.dp*/
     ) {
 
         val pictureAmount = 11-1 // one less than actual pictures are there
@@ -69,16 +51,6 @@ class MainActivity : ComponentActivity() {
             mutableStateOf(pictureAmount)
         }
 
-/*
-        var size by remember {
-            mutableStateOf(IntSize.Zero)
-        }
-
- */
-        /*
-        var value by remember {
-            mutableStateOf(initialValue)
-        }*/
         var currentTime by remember {
             mutableStateOf(totalTime)
         }
@@ -95,20 +67,20 @@ class MainActivity : ComponentActivity() {
             if (currentTime > 0 && isTimerRunning) {
                 delay(1000L)
                 currentTime -= 1000L
-                //value = currentTime / totalTime.toFloat()
+
             }
         }
 
 
-        Box(//color = Color(0xFF101010),
+        Box(
             modifier = Modifier.fillMaxSize()
         ) {
             Column(
 
                modifier = Modifier
                    .fillMaxHeight(0.75f)
-                .fillMaxWidth(),
-                    //.padding(25.dp),
+                   .fillMaxWidth(),
+
                horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceAround    //.SpaceEvenly // TODO CHANGE
             ) {
@@ -145,7 +117,6 @@ class MainActivity : ComponentActivity() {
                             currentTime = currentTime,
                             onCurrentTimeChange = { currentTime = it },
                             totalTime = totalTime,
-                            counter = counter,
                             onCounterChange = { counter = it },
                             isTimerRunning,
                             onIsTimerRunningChange = { isTimerRunning = it },
@@ -153,16 +124,13 @@ class MainActivity : ComponentActivity() {
                             pictureAmount = pictureAmount
                         )
                     }
+
                     if (isTimerRunning) {
                         ResetButton(
-                            currentTime = currentTime,
                             onCurrentTimeChange = { currentTime = it },
                             totalTime = totalTime,
-                            counter = counter,
                             onCounterChange = { counter = it },
-                            isTimerRunning,
                             onIsTimerRunningChange = { isTimerRunning = it },
-                            onTimeToShowNextPictureChange = { timeToShowNextPicture = it },
                             pictureAmount = pictureAmount
                         )
                     }
@@ -176,30 +144,19 @@ class MainActivity : ComponentActivity() {
 
             // SECOND COLUMN
             Column(
-
-
-                modifier = Modifier.align(Alignment.BottomCenter)
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
                     .fillMaxHeight(0.25f)
                     .fillMaxWidth(),
-
-
-                    //.fillMaxSize()
-                //.padding(100.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
-                // verticalArrangement = Arrangement.SpaceAround    //.SpaceEvenly // TODO CHANGE
             ) {
-                //if (isTimerRunning && currentTime > 0L) {}
-                //else if (!isTimerRunning && currentTime == totalTime) {
+
                 if (!isTimerRunning && currentTime == totalTime) {
                     SetTimeForTimer(
-                        currentTime = currentTime,
                         onCurrentTimeChange = { currentTime = it },
                         totalTime = totalTime,
                         onTotalTimeChange = { totalTime = it },
-                        counter = counter,
-                        onCounterChange = { counter = it },
-                        isTimerRunning,
-                        onIsTimerRunningChange = { isTimerRunning = it },
+
                     )
                 }
                 //------
@@ -214,7 +171,7 @@ class MainActivity : ComponentActivity() {
                     }
                     //------
                 }// end box
-            }
+            } // end // SECOND COLUMN
         }
     }
 
@@ -229,17 +186,13 @@ fun ShowHangman(pictureAmount:Int,
                 timeToShowNextPicture:Long,
                 onTimeToShowNextPictureChange: (Long) -> Unit)
 {
-// counts down
-
 
     if(currentTime <= timeToShowNextPicture ){
-        if( (counter-1) >=  0) { // 2 - 1 >= 1 // 2 ist letzter counter wert
+        if( (counter-1) >=  0) { // 2 - 1 >= 1 // 2 si last counter value
 
             /////////////////
             val timePerPicture = totalTime/pictureAmount
-            //val timeToShowNextPicture = counter * timePerPicture
             onTimeToShowNextPictureChange( (counter-1) * timePerPicture)
-            //ShowCard(counter-1)
             onCounterChange(counter - 1)
             /////////////////
         }
@@ -331,37 +284,22 @@ fun ShowCard(pictureNumber:Int,currentTime:Long,totalTime:Long){
 
 @Composable
 fun ResetButton(
-                currentTime:Long,
                 onCurrentTimeChange:(Long) -> Unit,
                 totalTime: Long,
-                counter:Int,
                 onCounterChange:(Int) -> Unit,
-                isTimerRunning:Boolean,
                 onIsTimerRunningChange:(Boolean) -> Unit,
-                onTimeToShowNextPictureChange: (Long) -> Unit,
                 pictureAmount:Int,)
-
 {
-
     Button(
         onClick = {
 
             onCurrentTimeChange(totalTime)
             onCounterChange(pictureAmount)
-            onIsTimerRunningChange(false) // ONLY THIS STAYS
-            /*
-            onCurrentTimeChange(totalTime)
-            onCounterChange(pictureAmount)
             onIsTimerRunningChange(false)
 
-            ////////////// TODO  CAN ALL GET OUT except for --onIsTimerRunningChange(false)
-            val timePerPicture = totalTime/pictureAmount
-            onTimeToShowNextPictureChange( (pictureAmount) * timePerPicture)
-            ///////////////
-             */
         },
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = Color.Green
+            backgroundColor = Color.White
 
         )
     ) {
@@ -371,13 +309,13 @@ fun ResetButton(
     }
 
 }
-// end reset button
+
 
 
 
 @Composable
 fun TimerCountTextfield(currentTime:Long){
-    Row(   //modifier = Modifier.paddingFromBaseline(top = 200.dp, bottom = 8.dp)
+    Row(
     ) {
         showTimeInMinAndSec(currentTime)
     }
@@ -390,37 +328,38 @@ fun TimerCountTextfield(currentTime:Long){
 
 
 @Composable
-fun SetTimeForTimer(currentTime:Long,
+fun SetTimeForTimer(
                     onCurrentTimeChange:(Long) -> Unit,
                     totalTime: Long,
                     onTotalTimeChange:(Long) -> Unit,
-                    counter:Int,
-                    onCounterChange:(Int) -> Unit,
-                    isTimerRunning:Boolean,
-                    onIsTimerRunningChange:(Boolean) -> Unit,
+
 ){
     Column() {
         Row() {
+            Spacer(modifier = Modifier.size(5.dp))
             Button(
                 onClick = {
                     // add one minute
                     val timeChange =totalTime + (1000L*60)
                     onTotalTimeChange(timeChange)
                     onCurrentTimeChange(timeChange)
-                }) {
+                },colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),modifier = Modifier.size(width = 40.dp,height = 40.dp)
+            ) {
                 Image(
                     painterResource(id = R.drawable.ic_baseline_arrow_upward_24),
                     contentDescription = "",
                     modifier = Modifier.size(15.dp)
                 )
             }
+            Spacer(modifier = Modifier.size(25.dp))
             Button(
                 onClick = {
                     // subtract one minute
                     val timeChange =totalTime + (1000L)
                     onTotalTimeChange(timeChange)
                     onCurrentTimeChange(timeChange)
-                }) {
+                },colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),modifier = Modifier.size(width = 40.dp,height = 40.dp)
+            ) {
                 Image(
                     painterResource(id = R.drawable.ic_baseline_arrow_upward_24),
                     contentDescription = "",
@@ -433,6 +372,7 @@ fun SetTimeForTimer(currentTime:Long,
 
         }
         Row() {
+            Spacer(modifier = Modifier.size(5.dp))
             Button(
                 onClick = {
                     // add one second
@@ -441,13 +381,16 @@ fun SetTimeForTimer(currentTime:Long,
                         onTotalTimeChange(newTime)
                         onCurrentTimeChange(newTime)
                     }
-                }) {
+                },colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),modifier = Modifier.size(width = 40.dp,height = 40.dp)
+
+            ) {
                 Image(
                     painterResource(id = R.drawable.ic_baseline_arrow_downward_24),
                     contentDescription = "",
                     modifier = Modifier.size(15.dp)
                 )
             }
+            Spacer(modifier = Modifier.size(25.dp))
             Button(
                 onClick = {
                     // subtract one second
@@ -456,7 +399,9 @@ fun SetTimeForTimer(currentTime:Long,
                         onTotalTimeChange(newTime)
                         onCurrentTimeChange(newTime)
                     }
-                }) {
+                },colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),modifier = Modifier.size(width = 40.dp,height = 40.dp)
+
+            ) {
                 Image(
                     painterResource(id = R.drawable.ic_baseline_arrow_downward_24),
                     contentDescription = "",
@@ -515,7 +460,6 @@ fun ButtonStartPause(
                      currentTime:Long,
                      onCurrentTimeChange:(Long) -> Unit,
                      totalTime: Long,
-                     counter:Int,
                      onCounterChange:(Int) -> Unit,
                      isTimerRunning:Boolean,
                      onIsTimerRunningChange:(Boolean) -> Unit,
@@ -523,8 +467,6 @@ fun ButtonStartPause(
                      pictureAmount:Int,)
 
 {
-
-    //if(!isTimerRunning )
 
     Button(
         onClick = {
@@ -552,16 +494,15 @@ fun ButtonStartPause(
                     //-----------
 
                 }
-                //onIsTimerRunningChange(!isTimerRunning) --KEEP OLD VERSION
             }
         },
 
 
         colors = ButtonDefaults.buttonColors(
             backgroundColor = if (!isTimerRunning || currentTime <= 0L) {
-                Color.Green
+                Color.White
             } else {
-                Color.Red
+                Color.White // not used
             }
         )
     ) {
@@ -571,34 +512,7 @@ fun ButtonStartPause(
             else if (!isTimerRunning && currentTime > 0L) "Continue" // CONTINUE IS NOT NEEDED
             else "Restart"
         )
-        //trace("gfh")
 
-        //---------
-
-        /*
-        if (isTimerRunning && currentTime > 0L) {}
-        else if (!isTimerRunning && currentTime == totalTime) {}
-        else if (!isTimerRunning && currentTime > 0L)
-        else {
-
-            //---------
-            onCurrentTimeChange(totalTime)
-            onCounterChange(pictureAmount)
-            onIsTimerRunningChange(false)
-
-            //////////////
-            val timePerPicture = totalTime/pictureAmount
-            onTimeToShowNextPictureChange( (pictureAmount) * timePerPicture)
-            //------------
-
-
-            ///////////////
-            //Log.DEBUG("istimerrunning " + !isTimerRunning + "  creenttime  " + currentTime)
-            //Log.d("tag", "istimerrunning " + !isTimerRunning + "  creenttime  " + currentTime)
-        }
-
-         */
-        //-----------
 
     }
 }

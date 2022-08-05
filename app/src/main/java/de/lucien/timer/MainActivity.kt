@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
-
+import androidx.compose.ui.tooling.preview.Preview
 
 
 class MainActivity : ComponentActivity() {
@@ -24,20 +24,22 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Surface(
+           Surface(
                 color = Color(0xFF101010),
-                modifier = Modifier.fillMaxSize()
+               // modifier = Modifier.fillMaxSize()
             ) {
-                Box(
-                ) {
+                /*Box(
+                ) {*/
                     Timer(
                        /* handleColor = Color.Green,
                         inactiveBarColor = Color.DarkGray,
                         activeBarColor = Color(0xFF37B900),
                         modifier = Modifier.size(200.dp)*/
                     )
+
+
                 }
-            }
+          //  }
         }
     }
 }
@@ -45,7 +47,7 @@ class MainActivity : ComponentActivity() {
 
 
 
-
+    @Preview
     @Composable
     fun Timer(
         //totalTime: Long,
@@ -97,102 +99,121 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceAround    //.SpaceEvenly // TODO CHANGE
+
+        Box(//color = Color(0xFF101010),
+            modifier = Modifier.fillMaxSize()
         ) {
+            Column(
+
+               modifier = Modifier
+                   .fillMaxHeight(0.75f)
+                .fillMaxWidth(),
+                    //.padding(25.dp),
+               horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceAround    //.SpaceEvenly // TODO CHANGE
+            ) {
 
 
-
-
-
-
-            if(isTimerRunning ) {
-                //------
-                ShowHangman(
-                    pictureAmount = pictureAmount,
-                    currentTime = currentTime,
-                    totalTime = totalTime,
-                    counter = counter,
-                    onCounterChange = { counter = it },
-                    timeToShowNextPicture = timeToShowNextPicture,
-                    onTimeToShowNextPictureChange = { timeToShowNextPicture = it })
-                //------
-            }else{
-                /////
-                Card(
-                    elevation = 4.dp,
-                ) {
-                Image(
-                    painter = painterResource(id = R.drawable.pleer),
-                    contentDescription = null
-                )
-                }
-                ///////
-            }
-
-            Row() { // --row
-                /////////////////
-                if(!isTimerRunning ) {
-                    ButtonStartPause( // IS ONLY START BUTTON NOW!!!
+                if (isTimerRunning) {
+                    //------
+                    ShowHangman(
+                        pictureAmount = pictureAmount,
                         currentTime = currentTime,
-                        onCurrentTimeChange = { currentTime = it },
                         totalTime = totalTime,
                         counter = counter,
                         onCounterChange = { counter = it },
-                        isTimerRunning,
-                        onIsTimerRunningChange = { isTimerRunning = it },
-                        onTimeToShowNextPictureChange = { timeToShowNextPicture = it },
-                        pictureAmount = pictureAmount
-                    )
-                }
-                if(isTimerRunning ) {
-                    ResetButton(
-                        currentTime = currentTime,
-                        onCurrentTimeChange = { currentTime = it },
-                        totalTime = totalTime,
-                        counter = counter,
-                        onCounterChange = { counter = it },
-                        isTimerRunning,
-                        onIsTimerRunningChange = { isTimerRunning = it },
-                        onTimeToShowNextPictureChange = { timeToShowNextPicture = it },
-                        pictureAmount = pictureAmount
-                    )
+                        timeToShowNextPicture = timeToShowNextPicture,
+                        onTimeToShowNextPictureChange = { timeToShowNextPicture = it })
+                    //------
+                } else {
+                    /////
+                    Card(
+                        elevation = 4.dp,
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.pleer),
+                            contentDescription = null
+                        )
+                    }
+                    ///////
                 }
 
-            }//--row
+                Row() { // --row
+                    /////////////////
+                    if (!isTimerRunning) {
+                        ButtonStartPause( // IS ONLY START BUTTON NOW!!!
+                            currentTime = currentTime,
+                            onCurrentTimeChange = { currentTime = it },
+                            totalTime = totalTime,
+                            counter = counter,
+                            onCounterChange = { counter = it },
+                            isTimerRunning,
+                            onIsTimerRunningChange = { isTimerRunning = it },
+                            onTimeToShowNextPictureChange = { timeToShowNextPicture = it },
+                            pictureAmount = pictureAmount
+                        )
+                    }
+                    if (isTimerRunning) {
+                        ResetButton(
+                            currentTime = currentTime,
+                            onCurrentTimeChange = { currentTime = it },
+                            totalTime = totalTime,
+                            counter = counter,
+                            onCounterChange = { counter = it },
+                            isTimerRunning,
+                            onIsTimerRunningChange = { isTimerRunning = it },
+                            onTimeToShowNextPictureChange = { timeToShowNextPicture = it },
+                            pictureAmount = pictureAmount
+                        )
+                    }
+
+                }//--row
 
 
+            }// column end
             //-------
-            //if (isTimerRunning && currentTime > 0L) {}
-            //else if (!isTimerRunning && currentTime == totalTime) {
-            if (!isTimerRunning && currentTime == totalTime) {
-                SetTimeForTimer(
-                    currentTime = currentTime,
-                    onCurrentTimeChange = { currentTime = it },
-                    totalTime = totalTime,
-                    onTotalTimeChange = { totalTime = it },
-                    counter = counter,
-                    onCounterChange = { counter = it },
-                    isTimerRunning,
-                    onIsTimerRunningChange = { isTimerRunning = it },
-                )}
-            //------
 
 
+            // SECOND COLUMN
+            Column(
 
-            //--------
-            if (isTimerRunning && currentTime > 0L) {
-                TimerCountTextfield(currentTime = currentTime)
+
+                modifier = Modifier.align(Alignment.BottomCenter)
+                    .fillMaxHeight(0.25f)
+                    .fillMaxWidth(),
+
+
+                    //.fillMaxSize()
+                //.padding(100.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+                // verticalArrangement = Arrangement.SpaceAround    //.SpaceEvenly // TODO CHANGE
+            ) {
+                //if (isTimerRunning && currentTime > 0L) {}
+                //else if (!isTimerRunning && currentTime == totalTime) {
+                if (!isTimerRunning && currentTime == totalTime) {
+                    SetTimeForTimer(
+                        currentTime = currentTime,
+                        onCurrentTimeChange = { currentTime = it },
+                        totalTime = totalTime,
+                        onTotalTimeChange = { totalTime = it },
+                        counter = counter,
+                        onCounterChange = { counter = it },
+                        isTimerRunning,
+                        onIsTimerRunningChange = { isTimerRunning = it },
+                    )
+                }
+                //------
+
+
+                //--------
+                if (isTimerRunning && currentTime > 0L) {
+                    TimerCountTextfield(currentTime = currentTime)
+                } else if (!isTimerRunning && currentTime == totalTime) {
+                } else if (!isTimerRunning && currentTime > 0L) {
+                    TimerCountTextfield(currentTime = currentTime)
+                }
+                //------
             }
-            else if (!isTimerRunning && currentTime == totalTime) {}
-            else if (!isTimerRunning && currentTime > 0L){
-                TimerCountTextfield(currentTime = currentTime)
-            }
-            //------
-
         }
     }
 
@@ -355,7 +376,8 @@ fun ResetButton(
 
 @Composable
 fun TimerCountTextfield(currentTime:Long){
-    Row() {
+    Row(   //modifier = Modifier.paddingFromBaseline(top = 24.dp, bottom = 8.dp)
+    ) {
         showTimeInMinAndSec(currentTime)
     }
 

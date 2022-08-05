@@ -204,15 +204,16 @@ class MainActivity : ComponentActivity() {
                 }
                 //------
 
-
-                //--------
-                if (isTimerRunning && currentTime > 0L) {
-                    TimerCountTextfield(currentTime = currentTime)
-                } else if (!isTimerRunning && currentTime == totalTime) {
-                } else if (!isTimerRunning && currentTime > 0L) {
-                    TimerCountTextfield(currentTime = currentTime)
-                }
-                //------
+                Box(modifier = Modifier.padding(40.dp)) {
+                    //--------
+                    if (isTimerRunning && currentTime > 0L) {
+                        TimerCountTextfield(currentTime = currentTime)
+                    } else if (!isTimerRunning && currentTime == totalTime) {
+                    } else if (!isTimerRunning && currentTime > 0L) {
+                        TimerCountTextfield(currentTime = currentTime)
+                    }
+                    //------
+                }// end box
             }
         }
     }
@@ -376,7 +377,7 @@ fun ResetButton(
 
 @Composable
 fun TimerCountTextfield(currentTime:Long){
-    Row(   //modifier = Modifier.paddingFromBaseline(top = 24.dp, bottom = 8.dp)
+    Row(   //modifier = Modifier.paddingFromBaseline(top = 200.dp, bottom = 8.dp)
     ) {
         showTimeInMinAndSec(currentTime)
     }
@@ -410,7 +411,7 @@ fun SetTimeForTimer(currentTime:Long,
                 Image(
                     painterResource(id = R.drawable.ic_baseline_arrow_upward_24),
                     contentDescription = "",
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(15.dp)
                 )
             }
             Button(
@@ -423,7 +424,7 @@ fun SetTimeForTimer(currentTime:Long,
                 Image(
                     painterResource(id = R.drawable.ic_baseline_arrow_upward_24),
                     contentDescription = "",
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(15.dp)
                 )
             }
         }
@@ -444,7 +445,7 @@ fun SetTimeForTimer(currentTime:Long,
                 Image(
                     painterResource(id = R.drawable.ic_baseline_arrow_downward_24),
                     contentDescription = "",
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(15.dp)
                 )
             }
             Button(
@@ -459,7 +460,7 @@ fun SetTimeForTimer(currentTime:Long,
                 Image(
                     painterResource(id = R.drawable.ic_baseline_arrow_downward_24),
                     contentDescription = "",
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(5.dp)
                 )
             }
         }

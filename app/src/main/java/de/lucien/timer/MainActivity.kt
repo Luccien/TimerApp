@@ -145,7 +145,8 @@ class MainActivity : ComponentActivity() {
                             totalTime = totalTime,
                             onCounterChange = { counter = it },
                             onIsTimerRunningChange = { isTimerRunning = it },
-                            pictureAmount = pictureAmount
+                            pictureAmount = pictureAmount,
+                            mMediaPlayer = mMediaPlayer
                         )
                     }
 
@@ -305,7 +306,8 @@ fun ResetButton(
                 totalTime: Long,
                 onCounterChange:(Int) -> Unit,
                 onIsTimerRunningChange:(Boolean) -> Unit,
-                pictureAmount:Int,)
+                pictureAmount:Int,
+                mMediaPlayer : MediaPlayer)
 {
     Button(
         onClick = {
@@ -313,6 +315,7 @@ fun ResetButton(
             onCurrentTimeChange(totalTime)
             onCounterChange(pictureAmount)
             onIsTimerRunningChange(false)
+            mMediaPlayer.pause()
 
         },
         colors = ButtonDefaults.buttonColors(

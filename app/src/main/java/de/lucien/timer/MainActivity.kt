@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
         val pictureAmount = 11-1 // one less than actual pictures are there
 
         var totalTime by remember {
-            mutableStateOf(12L * 1000L)
+            mutableStateOf(3L * 60L * 1000L) // 3 minutes timer
         }
 
         var counter by remember {
